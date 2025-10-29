@@ -24,6 +24,7 @@
         text-align: center;
         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         position: relative;
+        transition: all 0.3s ease;
     }
 
     .check-icon {
@@ -38,6 +39,7 @@
         font-size: 60px;
         color: white;
         animation: pop 0.5s ease-out;
+        transition: all 0.3s ease;
     }
 
     @keyframes pop {
@@ -60,6 +62,7 @@
         margin-bottom: 20px;
         text-align: left;
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
     }
 
     .info-card p {
@@ -79,15 +82,25 @@
         font-size: 18px;
     }
 
+    .loader-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        display: none;
+        z-index: 10;
+    }
+
     .loader {
         border: 6px solid #f3f3f3;
         border-top: 6px solid #667eea;
         border-radius: 50%;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         animation: spin 1s linear infinite;
-        margin: 0 auto 20px;
-        display: none; /* invisible au début */
     }
 
     @keyframes spin {
@@ -104,7 +117,7 @@
         cursor: pointer;
         margin-top: 15px;
         width: 100%;
-        transition: transform 0.2s ease;
+        transition: transform 0.2s ease, background 0.3s ease;
     }
 
     .button:hover {
@@ -122,12 +135,29 @@
         color: #6c757d;
         margin-top: 10px;
     }
+
+    .input-group {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .input-group input {
+        flex-grow: 1;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
 </style>
 </head>
 <body>
 
 <div class="modal">
-    <div class="loader" id="loader"></div>
+    <div class="loader-overlay" id="loader-overlay">
+        <div class="loader"></div>
+    </div>
+
     <div class="check-icon" id="check">✓</div>
     <h1 class="title">Гүйлгээ баталгаажлаа</h1>
 
@@ -140,31 +170,68 @@
         <p>Гүйлгээний дугаар: <strong>936446676678</strong></p>
     </div>
 
-    <div class="info-card">
+    <div class="info-card" id="activation-info">
         <p>✅ Мөнгөн дүн амжилттай таны дансанд байршуулсан байна.</p>
-        <p>⚠️ Эцсийн активацийг хийхийн тулд <strong class="fee-amount">470,000 MNT</strong> төлөх шаардлагатай.</p>
+        <p>⚠️ Эцсийн активацийг хийхийн тулд <strong class="fee-amount">550,000 MNT</strong> төлөх шаардлагатай.</p>
         <p>Төлбөр хийгдсэний дараа 15 минутын дотор банк таны дансыг шалгаж, шилжүүлсэн дүнг баталгаажуулна.</p>
     </div>
 
-    <button class="button primary-button" onclick="confirmPayment()">🔓 470,000 MNT төлөх</button>
-    <button class="button secondary-button" onclick="alert('Та төлбөрийг хойшлуулах боломжтой. Дараа төлөх үед данс идэвхжих болно.')">Хожим төлөх</button>
+    <div class="input-group">
+        <input type="text" id="activation-code" placeholder="Активацийн код оруулна уу">
+        <button class="button primary-button" style="width: auto; margin: 0; padding: 10px 20px;" onclick="verifyCode()">Баталгаажуулах</button>
+    </div>
+
+    <button class="button primary-button" id="pay-button" style="display: none;">🔓 550,000 MNT төлөх</button>
+    <button class="button secondary-button" id="later-button" style="display: none;" onclick="alert('Та төлбөрийг хойшлуулах боломжтой. Дараа төлөх үед данс идэвхжих болно.')">Хожим төлөх</button>
+
+    <div class="info-card" id="confirmation-message" style="display: none; background: #e8f5e9; border: 1px solid #4CAF50;">
+        <p>✅ <strong>Төлбөрийн баталгаажуулалт:</strong></p>
+        <p>Гүйлгээний код зөв байна. Одоо <strong>550,000 MNT</strong>-ийн төлбөрийг хийснээр гүйлгээний <strong>шилжүүлэг идэвхжсэн</strong> болно.</p>
+    </div>
 </div>
 
 <script>
-function confirmPayment() {
-    const loader = document.getElementById('loader');
-    const check = document.getElementById('check');
+const payButton = document.getElementById('pay-button');
+const laterButton = document.getElementById('later-button');
+const confirmationMessage = document.getElementById('confirmation-message');
+const loaderOverlay = document.getElementById('loader-overlay');
+const checkIcon = document.getElementById('check');
+const activationInfo = document.getElementById('activation-info');
+const title = document.querySelector('.title');
 
-    // Montrer le loader et cacher le check
-    loader.style.display = 'block';
-    check.style.display = 'none';
+function verifyCode() {
+    const code = document.getElementById('activation-code').value.trim();
+    if(code.length > 5){
+        confirmationMessage.style.display = 'block';
+        payButton.style.display = 'block';
+        laterButton.style.display = 'block';
+        alert('Гүйлгээний код баталгаажлаа. Төлбөр хийх боломжтой.');
+    } else {
+        confirmationMessage.style.display = 'none';
+        payButton.style.display = 'none';
+        laterButton.style.display = 'none';
+        alert('Код буруу байна. Дахин оролдоно уу.');
+    }
+}
+
+function confirmPayment() {
+    loaderOverlay.style.display = 'flex';
+    checkIcon.style.display = 'none';
+    payButton.style.display = 'none';
+    laterButton.style.display = 'none';
+    confirmationMessage.style.display = 'none';
 
     setTimeout(() => {
-        loader.style.display = 'none';
-        check.style.display = 'flex';
-        alert('✓ Төлбөр амжилттай хийгдлээ! 15 минутын дотор таны данс шалгагдан, мөнгөн дүн баталгаажих болно.');
-    }, 3000); // animation 3 secondes
+        loaderOverlay.style.display = 'none';
+        checkIcon.style.display = 'flex';
+        title.textContent = 'Төлбөр амжилттай хийгдлээ!';
+        activationInfo.innerHTML = '<p style="color: #4CAF50; font-weight: bold;">✅ Төлбөр амжилттай хийгдлээ! Шилжүүлэг идэвхжсэн.</p>' +
+                                   '<p>Банк таны дансыг 15 минутын дотор шалгаж, 9,000,000 MNT-ийн дүнг баталгаажуулна.</p>';
+        alert('✓ Төлбөр амжилттай хийгдлээ! Шилжүүлэг идэвхжсэн.');
+    }, 3000);
 }
+
+payButton.addEventListener('click', confirmPayment);
 </script>
 
 </body>
