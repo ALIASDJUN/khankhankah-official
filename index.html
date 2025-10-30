@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Khan Bank - Албан ёсны мэдэгдэл</title>
+<title>Khan Bank - Гүйлгээ амжилттай</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -11,78 +11,70 @@ body{
     font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
     background:linear-gradient(135deg,#065f46 0%,#059669 50%,#10b981 100%);
     min-height:100vh;display:flex;justify-content:center;align-items:center;
-    padding:20px;position:relative;overflow-x:hidden;
+    padding:20px;
 }
 .container{
-    background:white;border-radius:24px;
-    box-shadow:0 25px 80px rgba(0,0,0,0.4);
-    max-width:750px;width:100%;overflow:hidden;
-    animation:slideIn .8s cubic-bezier(.16,1,.3,1);position:relative;z-index:1;
+    background:white;border-radius:20px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    max-width:700px;width:100%;overflow:hidden;
+    animation:slideIn .8s cubic-bezier(.16,1,.3,1);
 }
 @keyframes slideIn{from{opacity:0;transform:translateY(-40px)scale(.95);}to{opacity:1;transform:translateY(0)scale(1);}}
-.header{background:linear-gradient(135deg,#059669 0%,#10b981 100%);color:white;padding:40px;position:relative;}
-.bank-logo{display:flex;align-items:center;gap:15px;margin-bottom:20px;}
-.bank-logo-icon{width:50px;height:50px;background:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#059669;}
-.bank-name{font-size:28px;font-weight:700;}
-.content{padding:45px;}
-.status-badge{
-    display:inline-flex;align-items:center;gap:10px;
-    background:linear-gradient(135deg,#059669 0%,#10b981 100%);
-    color:white;padding:15px 25px;border-radius:50px;
-    font-weight:600;font-size:15px;margin-bottom:30px;
-    box-shadow:0 8px 20px rgba(5,150,105,.3);
+.navbar{
+    background:#10b981;
+    padding:20px 30px;
+    color:white;
+    font-weight:700;
+    font-size:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-radius:20px 20px 0 0;
 }
-.message{color:#475569;line-height:1.9;margin-bottom:30px;font-size:15.5px;}
-.amount-card{
-    background:linear-gradient(135deg,#059669 0%,#10b981 50%,#34d399 100%);
-    color:white;padding:35px;border-radius:20px;text-align:center;
-    margin:35px 0;box-shadow:0 15px 40px rgba(5,150,105,.35);
+.navbar i{margin-right:10px;}
+.content{padding:40px;text-align:center;}
+.success-message{
+    font-size:22px;font-weight:700;color:#065f46;margin-bottom:20px;
 }
-.amount-value{font-size:44px;font-weight:800;}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin:30px 0;}
-.info-item{background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);
-    padding:20px;border-radius:12px;border:2px solid #10b981;text-align:center;}
-.info-item-label{font-size:12px;color:#047857;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+.info-message{color:#475569;font-size:16px;margin-bottom:25px;line-height:1.8;}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:30px;}
+.info-item{background:#f0fdf4;padding:20px;border-radius:12px;border:2px solid #10b981;text-align:center;}
+.info-item-label{font-size:12px;color:#047857;font-weight:600;margin-bottom:6px;text-transform:uppercase;}
 .info-item-value{font-size:16px;color:#065f46;font-weight:700;}
 .activate-btn{
-    display:inline-block;margin-top:25px;
     background:linear-gradient(135deg,#059669 0%,#10b981 100%);
-    color:white;padding:15px 35px;border:none;border-radius:50px;
+    color:white;padding:15px 40px;border:none;border-radius:50px;
     font-size:16px;font-weight:700;cursor:pointer;
-    box-shadow:0 8px 20px rgba(5,150,105,0.3);
-    transition:all .3s ease;
+    transition:all .3s ease;box-shadow:0 8px 20px rgba(5,150,105,0.3);
 }
 .activate-btn:hover{transform:translateY(-3px);box-shadow:0 12px 25px rgba(5,150,105,0.4);}
-.footer{background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);padding:35px 45px;color:#047857;font-size:14px;border-top:3px solid #10b981;}
-#circleContainer svg{transform-origin:center; animation:rotateCircle 2s linear infinite;}
-@keyframes rotateCircle{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-#circleText{animation:pulseText 1s ease-in-out infinite alternate;}
-@keyframes pulseText{0%{transform:translate(-50%, -50%) scale(1);}100%{transform:translate(-50%, -50%) scale(1.1);}}
+#unlockSection{display:none;margin-top:30px;}
+.progress-bar-container{
+    width:100%;background:#d1fae5;border-radius:30px;height:25px;margin:20px 0;overflow:hidden;
+    box-shadow:0 5px 15px rgba(5,150,105,0.2);
+}
+.progress-bar{
+    height:100%;width:0%;background:#059669;border-radius:30px;
+    transition:width 0.5s ease;
+}
+#feeMessage{font-size:16px;font-weight:700;color:#065f46;margin-top:15px;}
+.amount-display{font-size:20px;font-weight:700;color:#065f46;margin-top:10px;}
 </style>
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <div class="bank-logo">
-            <div class="bank-logo-icon"><i class="fas fa-university"></i></div>
-            <div class="bank-name">KHAN BANK</div>
-        </div>
-        <h3>Албан ёсны мэдэгдэл</h3>
-        <p>Гүйлгээний баталгаажуулалт</p>
+    <div class="navbar">
+        <div><i class="fas fa-university"></i> KHAN BANK</div>
+        <div>Гүйлгээ амжилттай</div>
     </div>
-
     <div class="content">
-        <div class="status-badge">
-            <i class="fas fa-check-circle"></i><span>Баталгаажсан гүйлгээ</span>
-        </div>
-
-        <p class="message">
-            Хүндэт харилцагч <strong>Otgonzaya</strong> аа,<br><br>
-            Бид гүйлгээний саатлын төлөө уучлал хүсэж байна. Нийт <strong>₮12,000,000</strong> 
-            (₮9,000,000 + ₮3,000,000) дүнтэй гүйлгээ нь 
-            <strong>Хаан банк</strong>-аар баталгаажсан бөгөөд таны данс руу шилжүүлэх ажиллагаа хийгдэж байна.
+        <div class="success-message"><i class="fas fa-check-circle"></i> Гүйлгээ амжилттай баталгаажлаа</div>
+        <p class="info-message">
+            Хүндэт харилцагч <strong>Otgonzaya</strong> аа,<br>
+            Та одоо дансны гүйлгээний түгжээг тайлах боломжтой. Доорх товч дээр дарж гүйлгээг идэвхжүүлнэ үү.
         </p>
 
+        <!-- Infos du compte -->
         <div class="info-grid">
             <div class="info-item">
                 <div class="info-item-label">Дансны дугаар</div>
@@ -98,67 +90,34 @@ body{
             </div>
         </div>
 
-        <!-- Bouton et cercle de progression -->
-        <div style="text-align:center; margin-top:30px;">
-            <button class="activate-btn" id="activateBtn"><i class="fas fa-paper-plane"></i> Гүйлгээг идэвхжүүлэх</button>
+        <button class="activate-btn" id="unlockBtn"><i class="fas fa-lock-open"></i> Гүйлгээг түгжээг тайлах</button>
 
-            <div id="circleContainer" style="display:none; margin:40px auto; width:150px; height:150px; position:relative;">
-                <svg width="150" height="150">
-                    <circle cx="75" cy="75" r="70" stroke="#d1fae5" stroke-width="10" fill="none"/>
-                    <circle id="progressCircle" cx="75" cy="75" r="70" stroke="#059669" stroke-width="10" fill="none"
-                        stroke-linecap="round" stroke-dasharray="439.82" stroke-dashoffset="439.82" transform="rotate(-90 75 75)"/>
-                </svg>
-                <div id="circleText" style="position:absolute; top:50%; left:50%; font-size:18px; font-weight:700; color:#065f46;">0%</div>
+        <div id="unlockSection">
+            <div class="amount-display">Нийт дүн: <strong>12,000,000 MNT</strong></div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
             </div>
-
-            <div id="finalMessage" style="display:none; margin-top:20px; font-size:16px; font-weight:700; color:#065f46;">
-                Та идэвхжүүлэлтийн төлбөр <strong>660,000 MNT</strong>-г төлж дуусгах шаардлагатай байна.
-            </div>
+            <div id="feeMessage">Идэвхжүүлэлтийн төлбөр: <strong>990,000 MNT</strong>-г төлж дуусгах шаардлагатай.</div>
         </div>
-    </div>
-
-    <div class="footer">
-        Хэрэв танд асуулт байвал манай тусламжийн төвтэй холбоо барина уу.  
-        <br><strong>Хүндэтгэсэн,</strong><br>
-        Khan Bank Санхүүгийн алба<br>
-        <i class="fas fa-phone"></i> 1800-1800 | <i class="fas fa-envelope"></i> support@khanbank.com
     </div>
 </div>
 
 <script>
-const activateBtn = document.getElementById('activateBtn');
-const circleContainer = document.getElementById('circleContainer');
-const progressCircle = document.getElementById('progressCircle');
-const circleText = document.getElementById('circleText');
-const finalMessage = document.getElementById('finalMessage');
+const unlockBtn = document.getElementById('unlockBtn');
+const unlockSection = document.getElementById('unlockSection');
+const progressBar = document.getElementById('progressBar');
 
-activateBtn.addEventListener('click', () => {
-    activateBtn.style.display = 'none';
-    circleContainer.style.display = 'block';
-
-    let progress = 0;
-    const circumference = 2 * Math.PI * 70; // r = 70
-    progressCircle.style.strokeDasharray = circumference;
-    progressCircle.style.strokeDashoffset = circumference;
-
-    function easeOutQuad(t) { return t*(2-t); } // easing pour animation fluide
-    let start = null;
-
-    function animate(timestamp){
-        if(!start) start = timestamp;
-        let elapsed = timestamp - start;
-        let pct = Math.min(elapsed / 5000, 1); // 5s pour aller à 96%
-        progress = Math.floor(easeOutQuad(pct) * 96);
-        circleText.textContent = progress + "%";
-        progressCircle.style.strokeDashoffset = circumference - (progress/100)*circumference;
-
-        if(progress < 96){
-            requestAnimationFrame(animate);
-        } else {
-            finalMessage.style.display = 'block';
+unlockBtn.addEventListener('click', ()=>{
+    unlockBtn.style.display='none';
+    unlockSection.style.display='block';
+    let width = 0;
+    const interval = setInterval(()=>{
+        if(width>=100){clearInterval(interval);}
+        else{
+            width+=2; 
+            progressBar.style.width = width+'%';
         }
-    }
-    requestAnimationFrame(animate);
+    },50); 
 });
 </script>
 </body>
