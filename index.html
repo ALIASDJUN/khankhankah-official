@@ -3,78 +3,416 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Khan Bank - Гүйлгээ амжилттай</title>
+<title>Khan Bank - Финализаци амжилттай</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-    font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
-    background:linear-gradient(135deg,#065f46 0%,#059669 50%,#10b981 100%);
-    min-height:100vh;display:flex;justify-content:center;align-items:center;
-    padding:20px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-.container{
-    background:white;border-radius:20px;
-    box-shadow:0 20px 60px rgba(0,0,0,0.3);
-    max-width:700px;width:100%;overflow:hidden;
-    animation:slideIn .8s cubic-bezier(.16,1,.3,1);
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #065f46 0%, #059669 50%, #10b981 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
 }
-@keyframes slideIn{from{opacity:0;transform:translateY(-40px)scale(.95);}to{opacity:1;transform:translateY(0)scale(1);}}
-.navbar{
-    background:#10b981;
-    padding:20px 30px;
-    color:white;
-    font-weight:700;
-    font-size:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-radius:20px 20px 0 0;
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(5, 150, 105, 0.3) 0%, transparent 50%);
+    animation: bgMove 15s ease-in-out infinite;
 }
-.navbar i{margin-right:10px;}
-.content{padding:40px;text-align:center;}
-.success-message{
-    font-size:22px;font-weight:700;color:#065f46;margin-bottom:20px;
+
+@keyframes bgMove {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
 }
-.info-message{color:#475569;font-size:16px;margin-bottom:25px;line-height:1.8;}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:30px;}
-.info-item{background:#f0fdf4;padding:20px;border-radius:12px;border:2px solid #10b981;text-align:center;}
-.info-item-label{font-size:12px;color:#047857;font-weight:600;margin-bottom:6px;text-transform:uppercase;}
-.info-item-value{font-size:16px;color:#065f46;font-weight:700;}
-.activate-btn{
-    background:linear-gradient(135deg,#059669 0%,#10b981 100%);
-    color:white;padding:15px 40px;border:none;border-radius:50px;
-    font-size:16px;font-weight:700;cursor:pointer;
-    transition:all .3s ease;box-shadow:0 8px 20px rgba(5,150,105,0.3);
+
+.container {
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25), 0 10px 30px rgba(0, 0, 0, 0.15);
+    max-width: 750px;
+    width: 100%;
+    overflow: hidden;
+    animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    z-index: 1;
 }
-.activate-btn:hover{transform:translateY(-3px);box-shadow:0 12px 25px rgba(5,150,105,0.4);}
-#unlockSection{display:none;margin-top:30px;}
-.progress-bar-container{
-    width:100%;background:#d1fae5;border-radius:30px;height:25px;margin:20px 0;overflow:hidden;
-    box-shadow:0 5px 15px rgba(5,150,105,0.2);
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
-.progress-bar{
-    height:100%;width:0%;background:#059669;border-radius:30px;
-    transition:width 0.5s ease;
+
+.navbar {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    padding: 25px 35px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
 }
-#feeMessage{font-size:16px;font-weight:700;color:#065f46;margin-top:15px;}
-.amount-display{font-size:20px;font-weight:700;color:#065f46;margin-top:10px;}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand i {
+    font-size: 24px;
+}
+
+.navbar-status {
+    font-size: 14px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.content {
+    padding: 45px 40px;
+}
+
+.success-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    padding: 20px 30px;
+    border-radius: 50px;
+    margin-bottom: 25px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.success-badge i {
+    font-size: 32px;
+    color: #059669;
+}
+
+.success-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #065f46;
+}
+
+.greeting {
+    color: #1f2937;
+    font-size: 17px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.greeting strong {
+    color: #059669;
+    font-weight: 700;
+}
+
+.alert-box {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left: 4px solid #f59e0b;
+    padding: 18px 20px;
+    border-radius: 12px;
+    margin: 25px 0;
+    display: flex;
+    align-items: start;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15);
+}
+
+.alert-box i {
+    color: #f59e0b;
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.alert-text {
+    color: #92400e;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin: 30px 0;
+}
+
+.info-item {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    padding: 22px;
+    border-radius: 16px;
+    border: 2px solid #10b981;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.info-item:hover {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+}
+
+.info-item:hover::before {
+    left: 100%;
+}
+
+.info-item-label {
+    font-size: 12px;
+    color: #047857;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-item-value {
+    font-size: 17px;
+    color: #065f46;
+    font-weight: 700;
+}
+
+.progress-section {
+    margin: 35px 0;
+    padding: 25px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border-radius: 20px;
+}
+
+.progress-label {
+    font-size: 15px;
+    color: #065f46;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-percentage {
+    font-size: 18px;
+    color: #059669;
+    font-weight: 700;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background: #d1fae5;
+    border-radius: 30px;
+    height: 30px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 8px rgba(5, 150, 105, 0.15);
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+    border-radius: 30px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.timer-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.timer {
+    font-size: 20px;
+    font-weight: 700;
+    color: #065f46;
+    padding: 15px 30px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+    transition: all 0.3s ease;
+}
+
+.timer i {
+    color: #059669;
+}
+
+.timer.completed {
+    background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 100%);
+    animation: celebration 0.6s ease;
+}
+
+@keyframes celebration {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.footer-note {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.footer-note i {
+    color: #059669;
+    margin-right: 5px;
+}
+
+.reset-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .container {
+        border-radius: 16px;
+    }
+    
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .content {
+        padding: 30px 20px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .success-badge {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .timer {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+}
 </style>
 </head>
 <body>
 <div class="container">
     <div class="navbar">
-        <div><i class="fas fa-university"></i> KHAN BANK</div>
-        <div>Гүйлгээ амжилттай</div>
+        <div class="navbar-brand">
+            <i class="fas fa-university"></i>
+            <span>KHAN BANK</span>
+        </div>
+        <div class="navbar-status">
+            <i class="fas fa-shield-alt"></i> Баталгаажсан
+        </div>
     </div>
+    
     <div class="content">
-        <div class="success-message"><i class="fas fa-check-circle"></i> Гүйлгээ амжилттай баталгаажлаа</div>
-        <p class="info-message">
+        <div style="text-align: center;">
+            <div class="success-badge">
+                <i class="fas fa-check-circle"></i>
+                <span class="success-text">Мөнгөн дүн амжилттай илгээгдлээ</span>
+            </div>
+        </div>
+
+        <p class="greeting">
             Хүндэт харилцагч <strong>Otgonzaya</strong> аа,<br>
-            Та одоо дансны гүйлгээний түгжээг тайлах боломжтой. Доорх товч дээр дарж гүйлгээг идэвхжүүлнэ үү.
+            Таны төлбөр амжилттай хийгдсэн бөгөөд одоо трансфер таны дансанд идэвхжих шатанд явж байна.
         </p>
 
-        <!-- Infos du compte -->
+        <div class="alert-box">
+            <i class="fas fa-info-circle"></i>
+            <div class="alert-text">
+                Трансфер <strong>1 цагийн дотор</strong> бүрэн идэвхжинэ. Та доорх мэдээллийг анхаарна уу.
+            </div>
+        </div>
+
         <div class="info-grid">
             <div class="info-item">
                 <div class="info-item-label">Дансны дугаар</div>
@@ -86,38 +424,168 @@ body{
             </div>
             <div class="info-item">
                 <div class="info-item-label">Банк</div>
-                <div class="info-item-value">Хаан банк (Khan Bank)</div>
+                <div class="info-item-value">Хаан банк</div>
+            </div>
+            <div class="info-item">
+                <div class="info-item-label">Нийт дүн</div>
+                <div class="info-item-value">12,000,000 MNT</div>
+            </div>
+            <div class="info-item">
+                <div class="info-item-label">Финализацын төлбөр</div>
+                <div class="info-item-value">510,000 MNT</div>
+            </div>
+            <div class="info-item">
+                <div class="info-item-label">Төлөв</div>
+                <div class="info-item-value" id="status">
+                    <i class="fas fa-spinner fa-spin" style="color: #059669;"></i> Боловсруулж байна
+                </div>
             </div>
         </div>
 
-        <button class="activate-btn" id="unlockBtn"><i class="fas fa-lock-open"></i> Гүйлгээг түгжээг тайлах</button>
-
-        <div id="unlockSection">
-            <div class="amount-display">Нийт дүн: <strong>12,000,000 MNT</strong></div>
+        <div class="progress-section">
+            <div class="progress-label">
+                <span><i class="fas fa-clock"></i> Идэвхжилтийн явц</span>
+                <span class="progress-percentage" id="progressPercent">0%</span>
+            </div>
             <div class="progress-bar-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
-            <div id="feeMessage">Идэвхжүүлэлтийн төлбөр: <strong>990,000 MNT</strong>-г төлж дуусгах шаардлагатай.</div>
+            <div class="timer-box">
+                <div class="timer" id="timer">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span id="timerText">Хугацаа үлдсэн: 01:00:00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <i class="fas fa-lock"></i>
+            Таны мэдээлэл найдвартай хамгаалагдсан байна. Khan Bank нь таны аюулгүй байдлыг эрхэмлэдэг.
+        </div>
+
+        <!-- Bouton de réinitialisation (pour test) -->
+        <div style="text-align: center;">
+            <button class="reset-button" onclick="resetTimer()">
+                <i class="fas fa-redo"></i> Цагийг дахин эхлүүлэх (Тест)
+            </button>
         </div>
     </div>
 </div>
 
 <script>
-const unlockBtn = document.getElementById('unlockBtn');
-const unlockSection = document.getElementById('unlockSection');
+// Éléments DOM
 const progressBar = document.getElementById('progressBar');
+const timerEl = document.getElementById('timer');
+const timerText = document.getElementById('timerText');
+const progressPercent = document.getElementById('progressPercent');
+const statusEl = document.getElementById('status');
 
-unlockBtn.addEventListener('click', ()=>{
-    unlockBtn.style.display='none';
-    unlockSection.style.display='block';
-    let width = 0;
-    const interval = setInterval(()=>{
-        if(width>=100){clearInterval(interval);}
-        else{
-            width+=2; 
-            progressBar.style.width = width+'%';
+// Constantes
+const TOTAL_TIME = 60 * 60 * 1000; // 1 heure en millisecondes
+const STORAGE_KEY = 'khanBankEndTime';
+
+// Fonction pour initialiser ou récupérer le temps de fin
+function getEndTime() {
+    let endTime = localStorage.getItem(STORAGE_KEY);
+    
+    if (endTime) {
+        // Convertir en nombre et vérifier si c'est valide
+        endTime = parseInt(endTime);
+        
+        // Si le temps est déjà passé, réinitialiser
+        if (endTime <= Date.now()) {
+            endTime = Date.now() + TOTAL_TIME;
+            localStorage.setItem(STORAGE_KEY, endTime.toString());
         }
-    },50); 
+    } else {
+        // Première visite - créer un nouveau temps de fin
+        endTime = Date.now() + TOTAL_TIME;
+        localStorage.setItem(STORAGE_KEY, endTime.toString());
+    }
+    
+    return endTime;
+}
+
+// Fonction pour formater le temps
+function formatTime(hours, minutes, seconds) {
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+// Fonction pour mettre à jour l'affichage
+function updateDisplay(distance) {
+    if (distance <= 0) {
+        // Compteur terminé
+        timerText.textContent = 'Трансфер идэвхжсэн';
+        timerEl.classList.add('completed');
+        progressBar.style.width = '100%';
+        progressBar.style.background = 'linear-gradient(90deg, #10b981 0%, #34d399 100%)';
+        progressPercent.textContent = '100%';
+        statusEl.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i> Идэвхжсэн';
+        return true;
+    }
+    
+    // Calculer le temps restant
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Mettre à jour le texte du timer
+    timerText.textContent = `Хугацаа үлдсэн: ${formatTime(hours, minutes, seconds)}`;
+    
+    // Calculer et mettre à jour la progression
+    const progressValue = ((TOTAL_TIME - distance) / TOTAL_TIME) * 100;
+    progressBar.style.width = progressValue + '%';
+    progressPercent.textContent = Math.round(progressValue) + '%';
+    
+    return false;
+}
+
+// Fonction principale du compteur
+function startCountdown() {
+    const endTime = getEndTime();
+    
+    // Mise à jour immédiate
+    const initialDistance = endTime - Date.now();
+    const isCompleted = updateDisplay(initialDistance);
+    
+    // Si déjà terminé, pas besoin de continuer
+    if (isCompleted) {
+        return;
+    }
+    
+    // Mise à jour toutes les secondes
+    const interval = setInterval(() => {
+        const now = Date.now();
+        const distance = endTime - now;
+        
+        const completed = updateDisplay(distance);
+        
+        if (completed) {
+            clearInterval(interval);
+        }
+    }, 1000);
+}
+
+// Fonction pour réinitialiser le timer (pour test)
+function resetTimer() {
+    if (confirm('Voulez-vous vraiment réinitialiser le compteur pour 1 heure ?')) {
+        const newEndTime = Date.now() + TOTAL_TIME;
+        localStorage.setItem(STORAGE_KEY, newEndTime.toString());
+        location.reload();
+    }
+}
+
+// Démarrer le compteur au chargement de la page
+document.addEventListener('DOMContentLoaded', () => {
+    startCountdown();
+});
+
+// Animation au chargement
+window.addEventListener('load', () => {
+    document.querySelector('.container').style.opacity = '0';
+    setTimeout(() => {
+        document.querySelector('.container').style.opacity = '1';
+    }, 100);
 });
 </script>
 </body>
