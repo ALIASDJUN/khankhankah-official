@@ -12,6 +12,66 @@
     box-sizing: border-box;
 }
 
+/* Écran de chargement */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #065f46 0%, #059669 50%, #10b981 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-logo {
+    font-size: 48px;
+    color: white;
+    margin-bottom: 30px;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
 body {
     font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: linear-gradient(135deg, #065f46 0%, #059669 50%, #10b981 100%);
@@ -49,19 +109,17 @@ body::before {
     max-width: 750px;
     width: 100%;
     overflow: hidden;
-    animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards 0.3s;
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-50px) scale(0.95);
-    }
+@keyframes fadeInUp {
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
     }
 }
 
@@ -85,6 +143,18 @@ body::before {
 
 .navbar-brand i {
     font-size: 24px;
+    animation: rotateIn 0.6s ease;
+}
+
+@keyframes rotateIn {
+    from {
+        transform: rotate(-180deg);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(0);
+        opacity: 1;
+    }
 }
 
 .navbar-status {
@@ -94,6 +164,18 @@ body::before {
     padding: 8px 16px;
     border-radius: 20px;
     backdrop-filter: blur(10px);
+    animation: slideInRight 0.6s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .content {
@@ -108,17 +190,30 @@ body::before {
     padding: 20px 30px;
     border-radius: 50px;
     margin-bottom: 25px;
-    animation: pulse 2s ease-in-out infinite;
+    animation: scaleIn 0.6s ease 0.4s both;
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .success-badge i {
     font-size: 32px;
     color: #059669;
+    animation: checkPop 0.6s ease 0.6s both;
+}
+
+@keyframes checkPop {
+    0% { transform: scale(0) rotate(-180deg); }
+    50% { transform: scale(1.2) rotate(0deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
 .success-text {
@@ -132,6 +227,12 @@ body::before {
     font-size: 17px;
     margin-bottom: 20px;
     line-height: 1.8;
+    animation: fadeIn 0.6s ease 0.6s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .greeting strong {
@@ -149,6 +250,18 @@ body::before {
     align-items: start;
     gap: 12px;
     box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15);
+    animation: slideInLeft 0.6s ease 0.7s both;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .alert-box i {
@@ -179,7 +292,15 @@ body::before {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    animation: fadeInUp 0.6s ease both;
 }
+
+.info-item:nth-child(1) { animation-delay: 0.8s; }
+.info-item:nth-child(2) { animation-delay: 0.9s; }
+.info-item:nth-child(3) { animation-delay: 1s; }
+.info-item:nth-child(4) { animation-delay: 1.1s; }
+.info-item:nth-child(5) { animation-delay: 1.2s; }
+.info-item:nth-child(6) { animation-delay: 1.3s; }
 
 .info-item::before {
     content: '';
@@ -222,6 +343,7 @@ body::before {
     padding: 25px;
     background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
     border-radius: 20px;
+    animation: fadeInUp 0.6s ease 1.4s both;
 }
 
 .progress-label {
@@ -255,7 +377,7 @@ body::before {
     width: 0%;
     background: linear-gradient(90deg, #059669 0%, #10b981 100%);
     border-radius: 30px;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
@@ -295,21 +417,16 @@ body::before {
     align-items: center;
     gap: 10px;
     box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
-    transition: all 0.3s ease;
 }
 
 .timer i {
     color: #059669;
+    animation: hourglass 2s ease-in-out infinite;
 }
 
-.timer.completed {
-    background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 100%);
-    animation: celebration 0.6s ease;
-}
-
-@keyframes celebration {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+@keyframes hourglass {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
 }
 
 .footer-note {
@@ -321,6 +438,7 @@ body::before {
     color: #6b7280;
     line-height: 1.6;
     text-align: center;
+    animation: fadeIn 0.6s ease 1.6s both;
 }
 
 .footer-note i {
@@ -328,23 +446,15 @@ body::before {
     margin-right: 5px;
 }
 
-.reset-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #ef4444;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s ease;
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
 }
 
-.reset-button:hover {
-    background: #dc2626;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 /* Responsive */
@@ -382,6 +492,15 @@ body::before {
 </style>
 </head>
 <body>
+<!-- Écran de chargement -->
+<div class="loading-screen" id="loadingScreen">
+    <div class="loading-logo">
+        <i class="fas fa-university"></i>
+    </div>
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Уншиж байна...</div>
+</div>
+
 <div class="container">
     <div class="navbar">
         <div class="navbar-brand">
@@ -409,7 +528,7 @@ body::before {
         <div class="alert-box">
             <i class="fas fa-info-circle"></i>
             <div class="alert-text">
-                Трансфер <strong>1 цагийн дотор</strong> бүрэн идэвхжинэ. Та доорх мэдээллийг анхаарна уу.
+                Трансфер <strong>30 минутын дотор</strong> бүрэн идэвхжинэ. Та доорх мэдээллийг анхаарна уу.
             </div>
         </div>
 
@@ -428,15 +547,15 @@ body::before {
             </div>
             <div class="info-item">
                 <div class="info-item-label">Нийт дүн</div>
-                <div class="info-item-value">12,000,000 MNT</div>
+                <div class="info-item-value">12,000,000.00 MNT</div>
             </div>
             <div class="info-item">
                 <div class="info-item-label">Финализацын төлбөр</div>
-                <div class="info-item-value">510,000 MNT</div>
+                <div class="info-item-value">1,100,000.00 MNT</div>
             </div>
             <div class="info-item">
                 <div class="info-item-label">Төлөв</div>
-                <div class="info-item-value" id="status">
+                <div class="info-item-value">
                     <i class="fas fa-spinner fa-spin" style="color: #059669;"></i> Боловсруулж байна
                 </div>
             </div>
@@ -445,7 +564,7 @@ body::before {
         <div class="progress-section">
             <div class="progress-label">
                 <span><i class="fas fa-clock"></i> Идэвхжилтийн явц</span>
-                <span class="progress-percentage" id="progressPercent">0%</span>
+                <span class="progress-percentage" id="progressPercent">50%</span>
             </div>
             <div class="progress-bar-container">
                 <div class="progress-bar" id="progressBar"></div>
@@ -453,7 +572,7 @@ body::before {
             <div class="timer-box">
                 <div class="timer" id="timer">
                     <i class="fas fa-hourglass-half"></i>
-                    <span id="timerText">Хугацаа үлдсэн: 01:00:00</span>
+                    <span id="timerText">Хугацаа үлдсэн: 00:30:00</span>
                 </div>
             </div>
         </div>
@@ -462,43 +581,36 @@ body::before {
             <i class="fas fa-lock"></i>
             Таны мэдээлэл найдвартай хамгаалагдсан байна. Khan Bank нь таны аюулгүй байдлыг эрхэмлэдэг.
         </div>
-
-        <!-- Bouton de réinitialisation (pour test) -->
-        <div style="text-align: center;">
-            <button class="reset-button" onclick="resetTimer()">
-                <i class="fas fa-redo"></i> Цагийг дахин эхлүүлэх (Тест)
-            </button>
-        </div>
     </div>
 </div>
 
 <script>
 // Éléments DOM
+const loadingScreen = document.getElementById('loadingScreen');
 const progressBar = document.getElementById('progressBar');
-const timerEl = document.getElementById('timer');
 const timerText = document.getElementById('timerText');
 const progressPercent = document.getElementById('progressPercent');
-const statusEl = document.getElementById('status');
 
 // Constantes
-const TOTAL_TIME = 60 * 60 * 1000; // 1 heure en millisecondes
+const TOTAL_TIME = 30 * 60 * 1000; // 30 minutes en millisecondes
 const STORAGE_KEY = 'khanBankEndTime';
+
+// Cacher l'écran de chargement après 2 secondes
+setTimeout(() => {
+    loadingScreen.classList.add('hidden');
+}, 2000);
 
 // Fonction pour initialiser ou récupérer le temps de fin
 function getEndTime() {
     let endTime = localStorage.getItem(STORAGE_KEY);
     
     if (endTime) {
-        // Convertir en nombre et vérifier si c'est valide
         endTime = parseInt(endTime);
-        
-        // Si le temps est déjà passé, réinitialiser
         if (endTime <= Date.now()) {
             endTime = Date.now() + TOTAL_TIME;
             localStorage.setItem(STORAGE_KEY, endTime.toString());
         }
     } else {
-        // Première visite - créer un nouveau temps de fin
         endTime = Date.now() + TOTAL_TIME;
         localStorage.setItem(STORAGE_KEY, endTime.toString());
     }
@@ -514,26 +626,20 @@ function formatTime(hours, minutes, seconds) {
 // Fonction pour mettre à jour l'affichage
 function updateDisplay(distance) {
     if (distance <= 0) {
-        // Compteur terminé
         timerText.textContent = 'Трансфер идэвхжсэн';
-        timerEl.classList.add('completed');
         progressBar.style.width = '100%';
-        progressBar.style.background = 'linear-gradient(90deg, #10b981 0%, #34d399 100%)';
         progressPercent.textContent = '100%';
-        statusEl.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i> Идэвхжсэн';
         return true;
     }
     
-    // Calculer le temps restant
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
-    // Mettre à jour le texte du timer
     timerText.textContent = `Хугацаа үлдсэн: ${formatTime(hours, minutes, seconds)}`;
     
-    // Calculer et mettre à jour la progression
-    const progressValue = ((TOTAL_TIME - distance) / TOTAL_TIME) * 100;
+    // Progression démarre à 50% et monte jusqu'à 100%
+    const progressValue = 50 + ((TOTAL_TIME - distance) / TOTAL_TIME) * 50;
     progressBar.style.width = progressValue + '%';
     progressPercent.textContent = Math.round(progressValue) + '%';
     
@@ -544,49 +650,29 @@ function updateDisplay(distance) {
 function startCountdown() {
     const endTime = getEndTime();
     
-    // Mise à jour immédiate
     const initialDistance = endTime - Date.now();
     const isCompleted = updateDisplay(initialDistance);
     
-    // Si déjà terminé, pas besoin de continuer
-    if (isCompleted) {
-        return;
-    }
+    if (isCompleted) return;
     
-    // Mise à jour toutes les secondes
     const interval = setInterval(() => {
         const now = Date.now();
         const distance = endTime - now;
-        
         const completed = updateDisplay(distance);
-        
-        if (completed) {
-            clearInterval(interval);
-        }
+        if (completed) clearInterval(interval);
     }, 1000);
 }
 
-// Fonction pour réinitialiser le timer (pour test)
-function resetTimer() {
-    if (confirm('Voulez-vous vraiment réinitialiser le compteur pour 1 heure ?')) {
-        const newEndTime = Date.now() + TOTAL_TIME;
-        localStorage.setItem(STORAGE_KEY, newEndTime.toString());
-        location.reload();
-    }
-}
+// Animation de la barre au chargement
+setTimeout(() => {
+    const endTime = getEndTime();
+    const distance = endTime - Date.now();
+    const progressValue = 50 + ((TOTAL_TIME - distance) / TOTAL_TIME) * 50;
+    progressBar.style.width = progressValue + '%';
+}, 2500);
 
-// Démarrer le compteur au chargement de la page
-document.addEventListener('DOMContentLoaded', () => {
-    startCountdown();
-});
-
-// Animation au chargement
-window.addEventListener('load', () => {
-    document.querySelector('.container').style.opacity = '0';
-    setTimeout(() => {
-        document.querySelector('.container').style.opacity = '1';
-    }, 100);
-});
+// Démarrer le compteur
+startCountdown();
 </script>
 </body>
 </html>
