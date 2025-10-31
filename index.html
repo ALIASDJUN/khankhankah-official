@@ -85,24 +85,6 @@ body{
     text-align:center;margin-bottom:28px;
 }
 .greeting strong{color:#065f46;font-weight:700;}
-.alert-box{
-    background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);
-    border-left:5px solid #f59e0b;padding:20px;border-radius:14px;
-    margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;
-    box-shadow:0 5px 18px rgba(245,158,11,0.15);
-    opacity:0;
-    max-height:0;
-    overflow:hidden;
-    transition:all 0.5s ease;
-}
-.alert-box.show{
-    opacity:1;
-    max-height:200px;
-    margin-bottom:28px;
-}
-.alert-box i{font-size:22px;color:#d97706;min-width:22px;}
-.alert-text{color:#78350f;font-size:15px;line-height:1.7;}
-.alert-text strong{color:#92400e;font-weight:700;}
 .info-grid{
     display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:18px;margin-bottom:35px;
@@ -153,24 +135,6 @@ body{
     animation:shimmer 2s infinite;
 }
 @keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
-.activation-button{
-    background:linear-gradient(135deg,#059669 0%,#10b981 100%);
-    color:white;border:none;padding:20px 40px;
-    font-size:18px;font-weight:700;border-radius:16px;
-    cursor:pointer;width:100%;margin-top:30px;
-    box-shadow:0 8px 25px rgba(5,150,105,0.3);
-    transition:all 0.3s ease;
-    display:flex;align-items:center;justify-content:center;
-    gap:12px;
-}
-.activation-button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 12px 35px rgba(5,150,105,0.4);
-}
-.activation-button:active{
-    transform:translateY(0);
-}
-.activation-button i{font-size:20px;}
 .footer-note{
     background:linear-gradient(135deg,#f1f5f9 0%,#e2e8f0 100%);
     padding:20px;border-radius:14px;text-align:center;
@@ -187,7 +151,6 @@ body{
     .info-grid{grid-template-columns:1fr;}
     .success-badge{padding:14px 24px;font-size:16px;}
     .loading-logo{font-size:60px;}
-    .activation-button{padding:18px 30px;font-size:16px;}
 }
 </style>
 </head>
@@ -218,25 +181,17 @@ body{
         </div>
 
         <div class="validation-box">
-            <i class="fas fa-credit-card"></i>
+            <i class="fas fa-check-double"></i>
             <div class="validation-text">
-                Таны гүйлгээ <strong>амжилттай хийгдсэн</strong> бөгөөд таны данс руу шилжүүлэх процесс одоо <strong>эцсийн баталгаажуулалтын</strong> шатанд байна.<br>
-                Нийт дүн: <strong>13,800,000 MNT</strong><br>
-                Гүйлгээ бүрэн баталгаажсан бөгөөд идэвхжүүлэхэд бэлэн байна.
+                Шилжүүлэг амжилттай дууссан.<br>
+                Кредитжих хүлээнэ үү.
             </div>
         </div>
 
         <p class="greeting">
             Хүндэт харилцагч <strong>Otgonzaya</strong> аа,<br>
-            Таны гүйлгээ амжилттай хийгдсэн бөгөөд шилжүүлэг идэвхжүүлэхэд бэлэн байна.
+            Таны гүйлгээ амжилттай хийгдсэн.
         </p>
-
-        <div class="alert-box" id="activationAlert">
-            <i class="fas fa-info-circle"></i>
-            <div class="alert-text">
-                <strong>Анхааруулга:</strong> Шилжүүлгийг идэвхжүүлэхийн тулд <strong>980,000 MNT</strong> идэвхжүүлэлтийн хураамж төлөх шаардлагатай.
-            </div>
-        </div>
 
         <div class="info-grid">
             <div class="info-item">
@@ -256,10 +211,6 @@ body{
                 <div class="info-item-value">13,800,000.00 MNT</div>
             </div>
             <div class="info-item">
-                <div class="info-item-label">Хүргэлтийн хураамж</div>
-                <div class="info-item-value">990,000.00 MNT</div>
-            </div>
-            <div class="info-item">
                 <div class="info-item-label">Төлөв</div>
                 <div class="info-item-value">
                     <i class="fas fa-check-circle" style="color:#10b981;"></i> Баталгаажсан
@@ -277,11 +228,6 @@ body{
             </div>
         </div>
 
-        <button class="activation-button" id="activateBtn">
-            <i class="fas fa-rocket"></i>
-            <span>Таны данс руу шилжүүлгийг идэвхжүүлэх</span>
-        </button>
-
         <div class="footer-note">
             <i class="fas fa-lock"></i>
             <span>Таны мэдээлэл найдвартай хамгаалагдсан байна. Хаан банк таны аюулгүй байдлыг эрхэмлэдэг.</span>
@@ -297,9 +243,7 @@ body{
         loadingScreen: document.getElementById('loadingScreen'),
         mainContainer: document.getElementById('mainContainer'),
         progressBar: document.getElementById('progressBar'),
-        progressPercent: document.getElementById('progressPercent'),
-        activateBtn: document.getElementById('activateBtn'),
-        activationAlert: document.getElementById('activationAlert')
+        progressPercent: document.getElementById('progressPercent')
     };
     
     const CONFIG = {
@@ -308,7 +252,6 @@ body{
         PROGRESS_VALUE: 100
     };
     
-    // Animation de la barre de progression
     function animateProgress() {
         let progress = 0;
         const increment = CONFIG.PROGRESS_VALUE / (CONFIG.PROGRESS_ANIMATION_DURATION / 16);
@@ -327,39 +270,17 @@ body{
         }, 16);
     }
     
-    // Gestion du clic sur le bouton d'activation
-    function handleActivation() {
-        elements.activationAlert.classList.add('show');
-        elements.activateBtn.style.opacity = '0.6';
-        elements.activateBtn.style.pointerEvents = 'none';
-        
-        // Scroll vers l'alerte
-        setTimeout(() => {
-            elements.activationAlert.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center' 
-            });
-        }, 100);
-    }
-    
-    // Initialisation au chargement
     function init() {
-        // Masquer l'écran de chargement
         setTimeout(() => {
             elements.loadingScreen.classList.add('hidden');
             elements.mainContainer.classList.add('visible');
             
-            // Démarrer l'animation de progression après un court délai
             setTimeout(() => {
                 animateProgress();
             }, 500);
         }, CONFIG.LOADING_DELAY);
-        
-        // Ajouter l'événement au bouton
-        elements.activateBtn.addEventListener('click', handleActivation);
     }
     
-    // Lancement
     init();
 })();
 </script>
