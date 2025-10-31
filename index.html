@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Khan Bank - Финализаци амжилттай</title>
+<title>Khan Bank - Transaction réussie</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -19,7 +19,7 @@ body{
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     z-index:9999;transition:opacity 0.6s ease,visibility 0.6s ease;
 }
-.loading-screen.hidden{opacity:0;visibility:hidden;}
+.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none;}
 .loading-logo{
     font-size:80px;color:white;margin-bottom:30px;
     animation:pulse 1.5s ease-in-out infinite;
@@ -37,7 +37,9 @@ body{
     box-shadow:0 25px 70px rgba(0,0,0,0.35);
     max-width:800px;width:100%;overflow:hidden;
     animation:slideIn 0.8s cubic-bezier(0.16,1,0.3,1);
+    opacity:0;
 }
+.container.visible{opacity:1;}
 @keyframes slideIn{from{opacity:0;transform:translateY(-50px)scale(0.92);}to{opacity:1;transform:translateY(0)scale(1);}}
 .navbar{
     background:linear-gradient(135deg,#059669 0%,#10b981 100%);
@@ -74,7 +76,7 @@ body{
     box-shadow:0 6px 20px rgba(16,185,129,0.15);
     animation:fadeIn 0.8s ease 0.6s both;
 }
-.validation-box i{font-size:24px;color:#059669;}
+.validation-box i{font-size:24px;color:#059669;min-width:24px;}
 .validation-text{color:#065f46;font-size:16px;line-height:1.8;}
 .validation-text strong{color:#047857;}
 .greeting{
@@ -88,7 +90,7 @@ body{
     margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;
     box-shadow:0 5px 18px rgba(245,158,11,0.15);
 }
-.alert-box i{font-size:22px;color:#d97706;}
+.alert-box i{font-size:22px;color:#d97706;min-width:22px;}
 .alert-text{color:#78350f;font-size:15px;line-height:1.7;}
 .alert-text strong{color:#92400e;font-weight:700;}
 .info-grid{
@@ -121,9 +123,9 @@ body{
     position:relative;
 }
 .progress-bar{
-    height:100%;width:96%;
+    height:100%;width:0%;
     background:linear-gradient(90deg,#059669 0%,#10b981 50%,#34d399 100%);
-    border-radius:30px;transition:width 0.8s ease;
+    border-radius:30px;transition:width 1s cubic-bezier(0.4,0,0.2,1);
     box-shadow:0 2px 10px rgba(5,150,105,0.4);
     position:relative;overflow:hidden;
 }
@@ -133,16 +135,6 @@ body{
     animation:shimmer 2s infinite;
 }
 @keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
-.timer-box{margin-top:20px;}
-.timer{
-    background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);
-    padding:18px;border-radius:14px;text-align:center;
-    border:2px solid #f59e0b;font-size:18px;font-weight:700;
-    color:#92400e;display:flex;align-items:center;
-    justify-content:center;gap:10px;
-    box-shadow:0 5px 18px rgba(245,158,11,0.15);
-}
-.timer i{color:#d97706;font-size:20px;}
 .footer-note{
     background:linear-gradient(135deg,#f1f5f9 0%,#e2e8f0 100%);
     padding:20px;border-radius:14px;text-align:center;
@@ -150,7 +142,15 @@ body{
     display:flex;align-items:center;justify-content:center;
     gap:10px;border:2px solid #cbd5e1;
 }
-.footer-note i{color:#059669;font-size:18px;}
+.footer-note i{color:#059669;font-size:18px;min-width:18px;}
+
+@media (max-width: 640px) {
+    .navbar{padding:18px 20px;flex-direction:column;gap:12px;}
+    .content{padding:30px 20px;}
+    .info-grid{grid-template-columns:1fr;}
+    .success-badge{padding:14px 24px;font-size:16px;}
+    .loading-logo{font-size:60px;}
+}
 </style>
 </head>
 <body>
@@ -160,7 +160,7 @@ body{
     <div class="loading-text">Уншиж байна...</div>
 </div>
 
-<div class="container">
+<div class="container" id="mainContainer">
     <div class="navbar">
         <div class="navbar-brand">
             <i class="fas fa-university"></i>
@@ -175,29 +175,28 @@ body{
         <div style="text-align:center;">
             <div class="success-badge">
                 <i class="fas fa-check-circle"></i>
-                <span class="success-text">Финализаци амжилттай хийгдлээ</span>
+                <span class="success-text">Гүйлгээ амжилттай хийгдлээ</span>
             </div>
         </div>
 
         <div class="validation-box">
             <i class="fas fa-credit-card"></i>
             <div class="validation-text">
-                Таны төлбөр <strong>амжилттай хийгдсэн</strong> бөгөөд одоо таны дансанд шилжүүлэх процесс 
-                <strong>баталгаажуулалтын шатанд</strong> байна.<br>
-                Баталгаажуулалтын хураамж: <strong>510,000 MNT</strong><br>
-                Энэхүү төлбөр нь <strong>12,000,000 MNT</strong>-ийн шилжүүлгийг идэвхжүүлэх үйл явцыг баталгаажуулна.
+                Таны гүйлгээ <strong>амжилттай хийгдсэн</strong> бөгөөд таны данс руу шилжүүлэх процесс одоо <strong>эцсийн баталгаажуулалтын</strong> шатанд байна.<br>
+                Хүргэлтийн хураамж: <strong>850,000 MNT</strong><br>
+                Энэхүү хураамж нь <strong>12,000,000 MNT</strong>-ийн шилжүүлгийг таны данс руу баталгаажуулна.
             </div>
         </div>
 
         <p class="greeting">
             Хүндэт харилцагч <strong>Otgonzaya</strong> аа,<br>
-            Таны гүйлгээ амжилттай хийгдсэн бөгөөд трансфер идэвхжиж байна.
+            Таны гүйлгээ амжилттай хийгдсэн бөгөөд шилжүүлэг идэвхжиж байна.
         </p>
 
         <div class="alert-box">
             <i class="fas fa-info-circle"></i>
             <div class="alert-text">
-                Трансфер <strong>15 минутын дотор</strong> бүрэн идэвхжинэ. Та доорх мэдээллийг анхаарна уу.
+                Шилжүүлэг <strong>хэдхэн хормын дотор</strong> бүрэн идэвхжинэ. Доорх мэдээллийг анхаарна уу.
             </div>
         </div>
 
@@ -219,13 +218,13 @@ body{
                 <div class="info-item-value">12,000,000.00 MNT</div>
             </div>
             <div class="info-item">
-                <div class="info-item-label">Финализацын төлбөр</div>
-                <div class="info-item-value">760,000.00 MNT</div>
+                <div class="info-item-label">Хүргэлтийн хураамж</div>
+                <div class="info-item-value">850,000.00 MNT</div>
             </div>
             <div class="info-item">
                 <div class="info-item-label">Төлөв</div>
                 <div class="info-item-value">
-                    <i class="fas fa-spinner fa-spin" style="color:#059669;"></i> Баталгаажиж байна
+                    <i class="fas fa-check-circle" style="color:#10b981;"></i> Баталгаажсан
                 </div>
             </div>
         </div>
@@ -233,105 +232,54 @@ body{
         <div class="progress-section">
             <div class="progress-label">
                 <span><i class="fas fa-clock"></i> Идэвхжилтийн явц</span>
-                <span class="progress-percentage" id="progressPercent">96%</span>
+                <span class="progress-percentage" id="progressPercent">99%</span>
             </div>
             <div class="progress-bar-container">
                 <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <div class="timer-box">
-                <div class="timer" id="timer">
-                    <i class="fas fa-hourglass-half"></i>
-                    <span id="timerText">Хугацаа үлдсэн: 00:15:00</span>
-                </div>
             </div>
         </div>
 
         <div class="footer-note">
             <i class="fas fa-lock"></i>
-            Таны мэдээлэл найдвартай хамгаалагдсан байна. Khan Bank нь таны аюулгүй байдлыг эрхэмлэдэг.
+            <span>Таны мэдээлэл найдвартай хамгаалагдсан байна. Хаан банк таны аюулгүй байдлыг эрхэмлэдэг.</span>
         </div>
     </div>
 </div>
 
 <script>
-const loadingScreen = document.getElementById('loadingScreen');
-const progressBar = document.getElementById('progressBar');
-const timerText = document.getElementById('timerText');
-const progressPercent = document.getElementById('progressPercent');
-
-// Timer de 15 minutes (15 * 60 * 1000 millisecondes)
-const TOTAL_TIME = 15 * 60 * 1000;
-const STORAGE_KEY = 'khanBankEndTime';
-
-// Masquer l'écran de chargement après 2 secondes
-setTimeout(() => loadingScreen.classList.add('hidden'), 2000);
-
-function getEndTime() {
-  let endTime = localStorage.getItem(STORAGE_KEY);
-  if (endTime) {
-    endTime = parseInt(endTime);
-    if (endTime <= Date.now()) {
-      endTime = Date.now() + TOTAL_TIME;
-      localStorage.setItem(STORAGE_KEY, endTime.toString());
-    }
-  } else {
-    endTime = Date.now() + TOTAL_TIME;
-    localStorage.setItem(STORAGE_KEY, endTime.toString());
-  }
-  return endTime;
-}
-
-function formatTime(h, m, s) {
-  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-}
-
-function updateDisplay(distance) {
-  if (distance <= 0) {
-    timerText.textContent = 'Трансфер идэвхжсэн';
-    progressBar.style.width = '100%';
-    progressPercent.textContent = '100%';
-    return true;
-  }
-  
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  
-  timerText.textContent = `Хугацаа үлдсэн: ${formatTime(hours, minutes, seconds)}`;
-  
-  // La barre commence à 96% et va jusqu'à 100%
-  const progressValue = 96 + ((TOTAL_TIME - distance) / TOTAL_TIME) * 4;
-  progressBar.style.width = progressValue + '%';
-  progressPercent.textContent = Math.round(progressValue) + '%';
-  
-  return false;
-}
-
-function startCountdown() {
-  const endTime = getEndTime();
-  const initialDistance = endTime - Date.now();
-  const isCompleted = updateDisplay(initialDistance);
-  
-  if (isCompleted) return;
-  
-  const interval = setInterval(() => {
-    const now = Date.now();
-    const distance = endTime - now;
-    const completed = updateDisplay(distance);
+(function() {
+    'use strict';
     
-    if (completed) clearInterval(interval);
-  }, 1000);
-}
-
-// Initialiser la barre à 96% au chargement
-setTimeout(() => {
-  const endTime = getEndTime();
-  const distance = endTime - Date.now();
-  const progressValue = 96 + ((TOTAL_TIME - distance) / TOTAL_TIME) * 4;
-  progressBar.style.width = progressValue + '%';
-}, 2500);
-
-startCountdown();
+    const elements = {
+        loadingScreen: document.getElementById('loadingScreen'),
+        mainContainer: document.getElementById('mainContainer'),
+        progressBar: document.getElementById('progressBar'),
+        progressPercent: document.getElementById('progressPercent')
+    };
+    
+    const CONFIG = {
+        LOADING_DELAY: 2000,
+        PROGRESS_VALUE: 99
+    };
+    
+    // Initialisation au chargement
+    function init() {
+        // Masquer l'écran de chargement
+        setTimeout(() => {
+            elements.loadingScreen.classList.add('hidden');
+            elements.mainContainer.classList.add('visible');
+            
+            // Animer la barre de progression à 99%
+            setTimeout(() => {
+                elements.progressBar.style.width = `${CONFIG.PROGRESS_VALUE}%`;
+                elements.progressPercent.textContent = `${CONFIG.PROGRESS_VALUE}%`;
+            }, 300);
+        }, CONFIG.LOADING_DELAY);
+    }
+    
+    // Lancement
+    init();
+})();
 </script>
 </body>
 </html>
