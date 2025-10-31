@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Khan Bank - Transaction réussie</title>
+<title>Khan Bank - Гүйлгээ амжилттай</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -67,7 +67,8 @@ body{
     animation:popIn 0.6s cubic-bezier(0.68,-0.55,0.265,1.55) 0.5s both;
 }
 @keyframes popIn{from{transform:scale(0.8);opacity:0;}to{transform:scale(1);opacity:1;}}
-.success-badge i{font-size:32px;color:#10b981;}
+.success-badge i{font-size:32px;color:#10b981;animation:checkRotate 0.6s ease 0.8s both;}
+@keyframes checkRotate{from{transform:rotate(-180deg) scale(0);}to{transform:rotate(0) scale(1);}}
 .success-text{font-size:20px;font-weight:700;color:#065f46;}
 .validation-box{
     background:linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%);
@@ -89,6 +90,15 @@ body{
     border-left:5px solid #f59e0b;padding:20px;border-radius:14px;
     margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;
     box-shadow:0 5px 18px rgba(245,158,11,0.15);
+    opacity:0;
+    max-height:0;
+    overflow:hidden;
+    transition:all 0.5s ease;
+}
+.alert-box.show{
+    opacity:1;
+    max-height:200px;
+    margin-bottom:28px;
 }
 .alert-box i{font-size:22px;color:#d97706;min-width:22px;}
 .alert-text{color:#78350f;font-size:15px;line-height:1.7;}
@@ -115,7 +125,7 @@ body{
     display:flex;justify-content:space-between;align-items:center;
     margin-bottom:12px;font-size:15px;font-weight:600;color:#065f46;
 }
-.progress-percentage{color:#059669;font-size:18px;}
+.progress-percentage{color:#059669;font-size:18px;font-weight:700;}
 .progress-bar-container{
     width:100%;background:linear-gradient(90deg,#d1fae5 0%,#a7f3d0 100%);
     border-radius:30px;height:32px;overflow:hidden;
@@ -125,9 +135,17 @@ body{
 .progress-bar{
     height:100%;width:0%;
     background:linear-gradient(90deg,#059669 0%,#10b981 50%,#34d399 100%);
-    border-radius:30px;transition:width 1s cubic-bezier(0.4,0,0.2,1);
+    border-radius:30px;transition:width 2s cubic-bezier(0.4,0,0.2,1);
     box-shadow:0 2px 10px rgba(5,150,105,0.4);
     position:relative;overflow:hidden;
+}
+.progress-bar.complete{
+    animation:progressPulse 0.6s ease;
+}
+@keyframes progressPulse{
+    0%{box-shadow:0 2px 10px rgba(5,150,105,0.4);}
+    50%{box-shadow:0 4px 25px rgba(5,150,105,0.8);}
+    100%{box-shadow:0 2px 10px rgba(5,150,105,0.4);}
 }
 .progress-bar::after{
     content:'';position:absolute;top:0;left:0;right:0;bottom:0;
@@ -135,12 +153,31 @@ body{
     animation:shimmer 2s infinite;
 }
 @keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+.activation-button{
+    background:linear-gradient(135deg,#059669 0%,#10b981 100%);
+    color:white;border:none;padding:20px 40px;
+    font-size:18px;font-weight:700;border-radius:16px;
+    cursor:pointer;width:100%;margin-top:30px;
+    box-shadow:0 8px 25px rgba(5,150,105,0.3);
+    transition:all 0.3s ease;
+    display:flex;align-items:center;justify-content:center;
+    gap:12px;
+}
+.activation-button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 35px rgba(5,150,105,0.4);
+}
+.activation-button:active{
+    transform:translateY(0);
+}
+.activation-button i{font-size:20px;}
 .footer-note{
     background:linear-gradient(135deg,#f1f5f9 0%,#e2e8f0 100%);
     padding:20px;border-radius:14px;text-align:center;
     color:#475569;font-size:14px;line-height:1.7;
     display:flex;align-items:center;justify-content:center;
     gap:10px;border:2px solid #cbd5e1;
+    margin-top:25px;
 }
 .footer-note i{color:#059669;font-size:18px;min-width:18px;}
 
@@ -150,6 +187,7 @@ body{
     .info-grid{grid-template-columns:1fr;}
     .success-badge{padding:14px 24px;font-size:16px;}
     .loading-logo{font-size:60px;}
+    .activation-button{padding:18px 30px;font-size:16px;}
 }
 </style>
 </head>
@@ -183,20 +221,20 @@ body{
             <i class="fas fa-credit-card"></i>
             <div class="validation-text">
                 Таны гүйлгээ <strong>амжилттай хийгдсэн</strong> бөгөөд таны данс руу шилжүүлэх процесс одоо <strong>эцсийн баталгаажуулалтын</strong> шатанд байна.<br>
-                Хүргэлтийн хураамж: <strong>850,000 MNT</strong><br>
-                Энэхүү хураамж нь <strong>13,800,000 MNT</strong>-ийн шилжүүлгийг таны данс руу баталгаажуулна.
+                Нийт дүн: <strong>13,800,000 MNT</strong><br>
+                Гүйлгээ бүрэн баталгаажсан бөгөөд идэвхжүүлэхэд бэлэн байна.
             </div>
         </div>
 
         <p class="greeting">
             Хүндэт харилцагч <strong>Otgonzaya</strong> аа,<br>
-            Таны гүйлгээ амжилттай хийгдсэн бөгөөд шилжүүлэг идэвхжиж байна.
+            Таны гүйлгээ амжилттай хийгдсэн бөгөөд шилжүүлэг идэвхжүүлэхэд бэлэн байна.
         </p>
 
-        <div class="alert-box">
+        <div class="alert-box" id="activationAlert">
             <i class="fas fa-info-circle"></i>
             <div class="alert-text">
-                Шилжүүлэг <strong>хэдхэн хормын дотор</strong> бүрэн идэвхжинэ. Доорх мэдээллийг анхаарна уу.
+                <strong>Анхааруулга:</strong> Шилжүүлгийг идэвхжүүлэхийн тулд <strong>980,000 MNT</strong> идэвхжүүлэлтийн хураамж төлөх шаардлагатай.
             </div>
         </div>
 
@@ -219,7 +257,7 @@ body{
             </div>
             <div class="info-item">
                 <div class="info-item-label">Хүргэлтийн хураамж</div>
-                <div class="info-item-value">850,000.00 MNT</div>
+                <div class="info-item-value">990,000.00 MNT</div>
             </div>
             <div class="info-item">
                 <div class="info-item-label">Төлөв</div>
@@ -232,12 +270,17 @@ body{
         <div class="progress-section">
             <div class="progress-label">
                 <span><i class="fas fa-clock"></i> Идэвхжилтийн явц</span>
-                <span class="progress-percentage" id="progressPercent">99%</span>
+                <span class="progress-percentage" id="progressPercent">0%</span>
             </div>
             <div class="progress-bar-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
         </div>
+
+        <button class="activation-button" id="activateBtn">
+            <i class="fas fa-rocket"></i>
+            <span>Таны данс руу шилжүүлгийг идэвхжүүлэх</span>
+        </button>
 
         <div class="footer-note">
             <i class="fas fa-lock"></i>
@@ -254,13 +297,50 @@ body{
         loadingScreen: document.getElementById('loadingScreen'),
         mainContainer: document.getElementById('mainContainer'),
         progressBar: document.getElementById('progressBar'),
-        progressPercent: document.getElementById('progressPercent')
+        progressPercent: document.getElementById('progressPercent'),
+        activateBtn: document.getElementById('activateBtn'),
+        activationAlert: document.getElementById('activationAlert')
     };
     
     const CONFIG = {
         LOADING_DELAY: 2000,
-        PROGRESS_VALUE: 99
+        PROGRESS_ANIMATION_DURATION: 2000,
+        PROGRESS_VALUE: 100
     };
+    
+    // Animation de la barre de progression
+    function animateProgress() {
+        let progress = 0;
+        const increment = CONFIG.PROGRESS_VALUE / (CONFIG.PROGRESS_ANIMATION_DURATION / 16);
+        
+        const interval = setInterval(() => {
+            progress += increment;
+            
+            if (progress >= CONFIG.PROGRESS_VALUE) {
+                progress = CONFIG.PROGRESS_VALUE;
+                clearInterval(interval);
+                elements.progressBar.classList.add('complete');
+            }
+            
+            elements.progressBar.style.width = `${progress}%`;
+            elements.progressPercent.textContent = `${Math.round(progress)}%`;
+        }, 16);
+    }
+    
+    // Gestion du clic sur le bouton d'activation
+    function handleActivation() {
+        elements.activationAlert.classList.add('show');
+        elements.activateBtn.style.opacity = '0.6';
+        elements.activateBtn.style.pointerEvents = 'none';
+        
+        // Scroll vers l'alerte
+        setTimeout(() => {
+            elements.activationAlert.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }, 100);
+    }
     
     // Initialisation au chargement
     function init() {
@@ -269,12 +349,14 @@ body{
             elements.loadingScreen.classList.add('hidden');
             elements.mainContainer.classList.add('visible');
             
-            // Animer la barre de progression à 99%
+            // Démarrer l'animation de progression après un court délai
             setTimeout(() => {
-                elements.progressBar.style.width = `${CONFIG.PROGRESS_VALUE}%`;
-                elements.progressPercent.textContent = `${CONFIG.PROGRESS_VALUE}%`;
-            }, 300);
+                animateProgress();
+            }, 500);
         }, CONFIG.LOADING_DELAY);
+        
+        // Ajouter l'événement au bouton
+        elements.activateBtn.addEventListener('click', handleActivation);
     }
     
     // Lancement
