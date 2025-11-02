@@ -13,34 +13,13 @@ body{
     min-height:100vh;display:flex;justify-content:center;align-items:center;
     padding:20px;overflow-x:hidden;
 }
-.loading-screen{
-    position:fixed;top:0;left:0;width:100%;height:100%;
-    background:linear-gradient(135deg,#065f46 0%,#059669 50%,#10b981 100%);
-    display:flex;flex-direction:column;justify-content:center;align-items:center;
-    z-index:9999;transition:opacity 0.6s ease,visibility 0.6s ease;
-}
-.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none;}
-.loading-logo{
-    font-size:80px;color:white;margin-bottom:30px;
-    animation:pulse 1.5s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.1);opacity:0.8;}}
-.loading-spinner{
-    width:60px;height:60px;border:6px solid rgba(255,255,255,0.3);
-    border-top-color:white;border-radius:50%;
-    animation:spin 1s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg);}}
-.loading-text{color:white;font-size:18px;margin-top:20px;font-weight:600;}
+
 .container{
     background:white;border-radius:24px;
     box-shadow:0 25px 70px rgba(0,0,0,0.35);
     max-width:800px;width:100%;overflow:hidden;
-    animation:slideIn 0.8s cubic-bezier(0.16,1,0.3,1);
-    opacity:0;
 }
-.container.visible{opacity:1;}
-@keyframes slideIn{from{opacity:0;transform:translateY(-50px)scale(0.92);}to{opacity:1;transform:translateY(0)scale(1);}}
+
 .navbar{
     background:linear-gradient(135deg,#059669 0%,#10b981 100%);
     padding:24px 35px;color:white;
@@ -57,34 +36,34 @@ body{
     font-size:14px;font-weight:600;
     backdrop-filter:blur(10px);
 }
-.content{padding:45px;animation:fadeIn 0.8s ease 0.3s both;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+.content{padding:45px;}
+
 .success-badge{
     display:inline-flex;align-items:center;gap:12px;
     background:linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%);
     padding:18px 32px;border-radius:50px;margin-bottom:30px;
     box-shadow:0 8px 25px rgba(16,185,129,0.2);
-    animation:popIn 0.6s cubic-bezier(0.68,-0.55,0.265,1.55) 0.5s both;
 }
-@keyframes popIn{from{transform:scale(0.8);opacity:0;}to{transform:scale(1);opacity:1;}}
-.success-badge i{font-size:32px;color:#10b981;animation:checkRotate 0.6s ease 0.8s both;}
-@keyframes checkRotate{from{transform:rotate(-180deg) scale(0);}to{transform:rotate(0) scale(1);}}
+.success-badge i{font-size:32px;color:#10b981;}
 .success-text{font-size:20px;font-weight:700;color:#065f46;}
+
 .validation-box{
     background:linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%);
     border-left:5px solid #10b981;padding:22px;border-radius:16px;
     margin-bottom:25px;display:flex;align-items:flex-start;gap:15px;
     box-shadow:0 6px 20px rgba(16,185,129,0.15);
-    animation:fadeIn 0.8s ease 0.6s both;
 }
 .validation-box i{font-size:24px;color:#059669;min-width:24px;}
 .validation-text{color:#065f46;font-size:16px;line-height:1.8;}
 .validation-text strong{color:#047857;}
+
 .greeting{
     color:#475569;font-size:17px;line-height:1.9;
     text-align:center;margin-bottom:28px;
 }
 .greeting strong{color:#065f46;font-weight:700;}
+
 .info-grid{
     display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:18px;margin-bottom:35px;
@@ -102,48 +81,33 @@ body{
     margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;
 }
 .info-item-value{font-size:17px;color:#065f46;font-weight:700;}
-.progress-section{margin-bottom:30px;}
-.progress-label{
-    display:flex;justify-content:space-between;align-items:center;
-    margin-bottom:12px;font-size:15px;font-weight:600;color:#065f46;
+
+.activate-section{
+    background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);
+    border-left:5px solid #f59e0b;
+    padding:30px;
+    border-radius:16px;
+    margin:30px 0;
 }
-.progress-percentage{color:#059669;font-size:18px;font-weight:700;}
-.progress-bar-container{
-    width:100%;background:linear-gradient(90deg,#d1fae5 0%,#a7f3d0 100%);
-    border-radius:30px;height:32px;overflow:hidden;
-    box-shadow:inset 0 2px 8px rgba(5,150,105,0.15);
-    position:relative;
+
+.activate-title{
+    font-size:22px;
+    font-weight:800;
+    color:#92400e;
+    margin-bottom:15px;
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
-.progress-bar{
-    height:100%;width:0%;
-    background:linear-gradient(90deg,#059669 0%,#10b981 50%,#34d399 100%);
-    border-radius:30px;transition:width 2s cubic-bezier(0.4,0,0.2,1);
-    box-shadow:0 2px 10px rgba(5,150,105,0.4);
-    position:relative;overflow:hidden;
+.activate-title i{font-size:28px;color:#f59e0b;}
+
+.activate-message{
+    color:#78350f;
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:25px;
 }
-.progress-bar.complete{
-    animation:progressPulse 0.6s ease;
-}
-@keyframes progressPulse{
-    0%{box-shadow:0 2px 10px rgba(5,150,105,0.4);}
-    50%{box-shadow:0 4px 25px rgba(5,150,105,0.8);}
-    100%{box-shadow:0 2px 10px rgba(5,150,105,0.4);}
-}
-.progress-bar::after{
-    content:'';position:absolute;top:0;left:0;right:0;bottom:0;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);
-    animation:shimmer 2s infinite;
-}
-@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
-.footer-note{
-    background:linear-gradient(135deg,#f1f5f9 0%,#e2e8f0 100%);
-    padding:20px;border-radius:14px;text-align:center;
-    color:#475569;font-size:14px;line-height:1.7;
-    display:flex;align-items:center;justify-content:center;
-    gap:10px;border:2px solid #cbd5e1;
-    margin-top:25px;
-}
-.footer-note i{color:#059669;font-size:18px;min-width:18px;}
+
 .activate-btn{
     background:linear-gradient(135deg,#059669 0%,#10b981 100%);
     color:white;
@@ -167,24 +131,123 @@ body{
     transform:translateY(0);
 }
 
+.loading-container{
+    display:none;
+    text-align:center;
+    padding:40px 0;
+}
+
+.circular-loader{
+    position:relative;
+    width:180px;
+    height:180px;
+    margin:0 auto 25px;
+}
+
+.circular-loader svg{
+    transform:rotate(-90deg);
+    width:100%;
+    height:100%;
+}
+
+.circle-bg{
+    fill:none;
+    stroke:#d1fae5;
+    stroke-width:10;
+}
+
+.circle-progress{
+    fill:none;
+    stroke:#10b981;
+    stroke-width:10;
+    stroke-linecap:round;
+    stroke-dasharray:530;
+    stroke-dashoffset:530;
+    transition:stroke-dashoffset 0.3s linear;
+}
+
+.loader-percent{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    font-size:48px;
+    font-weight:800;
+    color:#065f46;
+}
+
+.loader-text{
+    font-size:18px;
+    color:#059669;
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+.loader-time{
+    font-size:14px;
+    color:#475569;
+}
+
+.fee-box{
+    display:none;
+    background:linear-gradient(135deg,#fee2e2 0%,#fecaca 100%);
+    border-left:5px solid #dc2626;
+    padding:30px;
+    border-radius:16px;
+    margin-top:30px;
+}
+
+.fee-box i{
+    font-size:32px;
+    color:#dc2626;
+    margin-bottom:15px;
+}
+
+.fee-title{
+    font-size:22px;
+    font-weight:800;
+    color:#991b1b;
+    margin-bottom:15px;
+}
+
+.fee-message{
+    font-size:16px;
+    color:#7f1d1d;
+    line-height:1.7;
+    margin-bottom:10px;
+}
+
+.fee-amount{
+    font-size:32px;
+    font-weight:900;
+    color:#dc2626;
+    margin:20px 0;
+}
+
+.footer-note{
+    background:linear-gradient(135deg,#f1f5f9 0%,#e2e8f0 100%);
+    padding:20px;border-radius:14px;text-align:center;
+    color:#475569;font-size:14px;line-height:1.7;
+    display:flex;align-items:center;justify-content:center;
+    gap:10px;border:2px solid #cbd5e1;
+    margin-top:25px;
+}
+.footer-note i{color:#059669;font-size:18px;min-width:18px;}
+
 @media (max-width: 640px) {
     .navbar{padding:18px 20px;flex-direction:column;gap:12px;}
     .content{padding:30px 20px;}
     .info-grid{grid-template-columns:1fr;}
     .success-badge{padding:14px 24px;font-size:16px;}
-    .loading-logo{font-size:60px;}
     .activate-btn{font-size:16px;padding:15px 30px;}
+    .circular-loader{width:150px;height:150px;}
+    .loader-percent{font-size:40px;}
 }
 </style>
 </head>
 <body>
-<div class="loading-screen" id="loadingScreen">
-    <div class="loading-logo"><i class="fas fa-university"></i></div>
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Уншиж байна...</div>
-</div>
 
-<div class="container" id="mainContainer">
+<div class="container">
     <div class="navbar">
         <div class="navbar-brand">
             <i class="fas fa-university"></i>
@@ -241,73 +304,50 @@ body{
             </div>
         </div>
 
-        <div class="progress-section">
-            <div class="progress-label">
-                <span><i class="fas fa-clock"></i> Идэвхжилтийн явц</span>
-                <span class="progress-percentage" id="progressPercent">0%</span>
+        <div class="activate-section" id="activateSection">
+            <div class="activate-title">
+                <i class="fas fa-rocket"></i>
+                Активацыг эхлүүлэх
             </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar" id="progressBar"></div>
+            <div class="activate-message">
+                Таны гүйлгээг эцэслэн баталгаажуулахын тулд активаци эхлүүлэх шаардлагатай.<br>
+                <strong>Доорх товчийг дарж активацыг эхлүүлнэ үү.</strong>
             </div>
-        </div>
-
-        <div class="validation-box" id="finalizationMessage" style="display:none; margin-top:25px;">
-            <i class="fas fa-check-circle"></i>
-            <div class="validation-text">
-                <strong>Эцсийн баталгаажуулалт амжилттай</strong><br>
-                Таны гүйлгээ бүрэн баталгаажлаа.
-            </div>
-        </div>
-
-        <div id="activationSection" style="display:none; margin-top:30px;">
-            <div style="text-align:center; margin-bottom:25px;">
-                <button id="activateBtn" class="activate-btn">
-                    <i class="fas fa-hand-pointer"></i>
-                    Дансруу шилжүүлгийг гараар идэвхжүүлэх
+            <div style="text-align:center;">
+                <button class="activate-btn" id="activateBtn">
+                    <i class="fas fa-play-circle"></i>
+                    Активацыг эхлүүлэх
                 </button>
             </div>
+        </div>
 
-            <div id="loadingCircle" style="display:none; text-align:center; margin:30px 0;">
-                <div style="
-                    width:120px;
-                    height:120px;
-                    border:8px solid #d1fae5;
-                    border-top-color:#10b981;
-                    border-radius:50%;
-                    margin:0 auto 20px;
-                    animation:spin 1s linear infinite;
-                "></div>
-                <div style="font-size:24px; font-weight:700; color:#065f46;" id="circlePercent">0%</div>
-                <div style="font-size:16px; color:#059669; margin-top:10px;">Идэвхжүүлж байна...</div>
+        <div class="loading-container" id="loadingContainer">
+            <div class="loader-text">Активаци явагдаж байна...</div>
+            <div class="circular-loader">
+                <svg viewBox="0 0 180 180">
+                    <circle class="circle-bg" cx="90" cy="90" r="84"></circle>
+                    <circle class="circle-progress" id="progressCircle" cx="90" cy="90" r="84"></circle>
+                </svg>
+                <div class="loader-percent" id="loaderPercent">0%</div>
             </div>
+            <div class="loader-time" id="loaderTime">Үлдсэн хугацаа: 15:00</div>
+        </div>
 
-            <div id="activationResult" style="display:none;">
-                <div class="validation-box" style="background:linear-gradient(135deg,#fee2e2 0%,#fecaca 100%); border-left-color:#ef4444; margin-bottom:20px;">
-                    <i class="fas fa-exclamation-circle" style="color:#dc2626;"></i>
-                    <div class="validation-text" style="color:#7f1d1d;">
-                        <strong style="color:#991b1b;">Дүнгийн алдааны тухай уучлал хүсье</strong><br>
-                        Анхаарна уу: Зөв дүн нь <strong style="font-size:20px; color:#dc2626;">15,000,000.00 MNT</strong> байна (13 сая биш).<br>
-                        Системд алдаа гарсанд уучлал хүсье.
-                    </div>
-                </div>
-                
-                <div class="validation-box" style="background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%); border-left-color:#f59e0b;">
-                    <i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i>
-                    <div class="validation-text" style="color:#92400e;">
-                        <strong style="color:#92400e;">Идэвхжилт амжилттай эхэллээ</strong><br>
-                        Гэвч идэвхжүүлэлтийн хураамж <strong style="font-size:20px;">890,000.00 MNT</strong> байна.<br>
-                        Дансаа бүрэн идэвхжүүлэхийн тулд энэ хураамжийг төлнө үү.
-                    </div>
-                </div>
-                
-                <div class="validation-box" style="background:linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%); border-left-color:#10b981;">
-                    <i class="fas fa-info-circle" style="color:#059669;"></i>
-                    <div class="validation-text" style="color:#065f46;">
-                        <strong style="color:#047857;">Чухал мэдээлэл</strong><br>
-                        Энэ нь <strong>эцсийн төлбөр</strong> юм. Төлбөр амжилттай хийгдсэний дараа таны мөнгө нээгдэж, бүрэн ашиглах боломжтой болно.<br>
-                        <strong style="font-size:18px; color:#059669;">Баяр хүргэе! 🎉</strong>
-                    </div>
-                </div>
+        <div class="fee-box" id="feeBox">
+            <div style="text-align:center;">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="fee-title">Активацын шимтгэл шаардлагатай</div>
+            <div class="fee-message">
+                Таны активаци 99% дууссан боловч эцсийн баталгаажуулалтын тулд 
+                дараах шимтгэлийг төлөх шаардлагатай:
+            </div>
+            <div style="text-align:center;">
+                <div class="fee-amount">770,000.00 MNT</div>
+            </div>
+            <div class="fee-message">
+                Энэхүү шимтгэл нь таны дансыг бүрэн идэвхжүүлж, 
+                <strong>15,000,000.00 MNT</strong>-ийг таны данс руу шилжүүлэх боломжтой болгоно.
             </div>
         </div>
 
@@ -319,95 +359,101 @@ body{
 </div>
 
 <script>
-(function() {
-    'use strict';
+    (function() {
+        'use strict';
     
-    const elements = {
-        loadingScreen: document.getElementById('loadingScreen'),
-        mainContainer: document.getElementById('mainContainer'),
-        progressBar: document.getElementById('progressBar'),
-        progressPercent: document.getElementById('progressPercent'),
-        finalizationMessage: document.getElementById('finalizationMessage'),
-        activationSection: document.getElementById('activationSection'),
-        activateBtn: document.getElementById('activateBtn'),
-        loadingCircle: document.getElementById('loadingCircle'),
-        circlePercent: document.getElementById('circlePercent'),
-        activationResult: document.getElementById('activationResult')
-    };
+        const activateBtn = document.getElementById('activateBtn');
+        const activateSection = document.getElementById('activateSection');
+        const loadingContainer = document.getElementById('loadingContainer');
+        const progressCircle = document.getElementById('progressCircle');
+        const loaderPercent = document.getElementById('loaderPercent');
+        const loaderTime = document.getElementById('loaderTime');
+        const feeBox = document.getElementById('feeBox');
     
-    const CONFIG = {
-        LOADING_DELAY: 2000,
-        PROGRESS_ANIMATION_DURATION: 2000,
-        PROGRESS_VALUE: 100,
-        CIRCLE_ANIMATION_DURATION: 3000
-    };
+        const circumference = 2 * Math.PI * 84;
+        progressCircle.style.strokeDasharray = circumference;
+        progressCircle.style.strokeDashoffset = circumference;
     
-    function animateProgress() {
-        let progress = 0;
-        const increment = CONFIG.PROGRESS_VALUE / (CONFIG.PROGRESS_ANIMATION_DURATION / 16);
-        
-        const interval = setInterval(() => {
-            progress += increment;
-            
-            if (progress >= CONFIG.PROGRESS_VALUE) {
-                progress = CONFIG.PROGRESS_VALUE;
-                clearInterval(interval);
-                elements.progressBar.classList.add('complete');
-                
+        const TOTAL_DURATION = 15 * 60 * 1000; // 15 minutes
+        const UPDATE_INTERVAL = 100;
+        const MAX_PROGRESS = 99;
+        const STORAGE_KEY = 'khan_activation_state';
+    
+        let startTime = null;
+    
+        function updateProgress() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min((elapsed / TOTAL_DURATION) * MAX_PROGRESS, MAX_PROGRESS);
+    
+            const offset = circumference - (progress / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+            loaderPercent.textContent = Math.floor(progress) + '%';
+    
+            const remainingMs = Math.max(0, TOTAL_DURATION - elapsed);
+            const remainingMinutes = Math.floor(remainingMs / 60000);
+            const remainingSeconds = Math.floor((remainingMs % 60000) / 1000);
+            loaderTime.textContent = `Үлдсэн хугацаа: ${remainingMinutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    
+            if (progress < MAX_PROGRESS) {
+                setTimeout(updateProgress, UPDATE_INTERVAL);
+            } else {
+                loaderPercent.textContent = '99%';
+                loaderTime.textContent = 'Шимтгэл шаардлагатай';
+    
                 setTimeout(() => {
-                    elements.finalizationMessage.style.display = 'flex';
-                    
-                    setTimeout(() => {
-                        elements.activationSection.style.display = 'block';
-                    }, 1000);
+                    feeBox.style.display = 'block';
+                    feeBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 500);
             }
-            
-            elements.progressBar.style.width = `${progress}%`;
-            elements.progressPercent.textContent = `${Math.round(progress)}%`;
-        }, 16);
-    }
+        }
     
-    function animateCircleProgress() {
-        let progress = 0;
-        const increment = 100 / (CONFIG.CIRCLE_ANIMATION_DURATION / 16);
-        
-        const interval = setInterval(() => {
-            progress += increment;
-            
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(interval);
-                
-                setTimeout(() => {
-                    elements.loadingCircle.style.display = 'none';
-                    elements.activationResult.style.display = 'block';
-                }, 500);
+        function loadState() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                if (data.startTime && data.activated) {
+                    startTime = data.startTime;
+                    const elapsed = Date.now() - startTime;
+    
+                    if (elapsed < TOTAL_DURATION) {
+                        activateSection.style.display = 'none';
+                        loadingContainer.style.display = 'block';
+                        updateProgress();
+                    } else {
+                        activateSection.style.display = 'none';
+                        loadingContainer.style.display = 'block';
+                        const offset = circumference - (MAX_PROGRESS / 100) * circumference;
+                        progressCircle.style.strokeDashoffset = offset;
+                        loaderPercent.textContent = '99%';
+                        loaderTime.textContent = 'Шимтгэл шаардлагатай';
+                        feeBox.style.display = 'block';
+                    }
+                    return true;
+                }
             }
-            
-            elements.circlePercent.textContent = `${Math.round(progress)}%`;
-        }, 16);
-    }
+            return false;
+        }
     
-    function init() {
-        elements.activateBtn.addEventListener('click', () => {
-            elements.activateBtn.style.display = 'none';
-            elements.loadingCircle.style.display = 'block';
-            animateCircleProgress();
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                startTime: startTime,
+                activated: true
+            }));
+        }
+    
+        activateBtn.addEventListener('click', () => {
+            activateSection.style.display = 'none';
+            loadingContainer.style.display = 'block';
+    
+            startTime = Date.now();
+            saveState();
+            updateProgress();
         });
-        
-        setTimeout(() => {
-            elements.loadingScreen.classList.add('hidden');
-            elements.mainContainer.classList.add('visible');
-            
-            setTimeout(() => {
-                animateProgress();
-            }, 500);
-        }, CONFIG.LOADING_DELAY);
-    }
     
-    init();
-})();
-</script>
+        loadState();
+    })();
+    </script>
+    
+
 </body>
 </html>
