@@ -1,374 +1,608 @@
-    <!DOCTYPE html>
-<html lang="mn">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Гүйлгээ амжилттай</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+  <title>NDL Даатгал · Confirmation officielle</title>
+  <!-- Google Font & Font Awesome (icônes pro) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* — RESET & BASE — */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #d4d4d4 0%, #e8e8e8 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    body {
+      background: radial-gradient(circle at 10% 20%, #eef4fc, #d9e6f5);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1.8rem 1.2rem;
+      margin: 0;
+      line-height: 1.5;
+    }
 
-        .container {
-            background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
-            border-radius: 24px;
-            max-width: 480px;
-            width: 100%;
-            padding: 40px 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        }
+    /* — CARTE PRINCIPALE — */
+    .card {
+      max-width: 880px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 42px;
+      box-shadow: 0 30px 60px -18px rgba(10, 43, 94, 0.30), 0 12px 28px -10px rgba(0, 20, 50, 0.12);
+      padding: 2.8rem 3.2rem;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(2px);
+    }
 
-        .success-icon {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
-            animation: scaleIn 0.5s ease-out;
-        }
+    @media (max-width: 700px) {
+      .card {
+        padding: 2rem 1.6rem;
+        border-radius: 32px;
+      }
+    }
 
-        .success-icon::after {
-            content: '✓';
-            font-size: 48px;
-            color: white;
-            font-weight: bold;
-        }
+    @media (max-width: 460px) {
+      .card {
+        padding: 1.5rem 1.2rem;
+        border-radius: 26px;
+      }
+    }
 
-        @keyframes scaleIn {
-            from {
-                transform: scale(0);
-            }
-            to {
-                transform: scale(1);
-            }
-        }
+    /* — EN-TÊTE AVEC ICÔNE & BADGE — */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 2px solid #eaf1fd;
+      flex-wrap: wrap;
+    }
 
-        h1 {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 30px;
-        }
+    .brand-icon {
+      background: linear-gradient(145deg, #0a2b5e, #1a4a7a);
+      color: #fff;
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 0 10px 20px -8px rgba(10, 43, 94, 0.25);
+      flex-shrink: 0;
+    }
 
-        .info-box {
-            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f4 100%);
-            border: 2px solid #a5d6a7;
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 20px;
-        }
+    .brand-text {
+      flex: 1;
+      min-width: 160px;
+    }
 
-        .info-header {
-            color: #2e7d32;
-            font-size: 15px;
-            font-weight: 500;
-            text-align: center;
-            margin-bottom: 16px;
-        }
+    .brand-text h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0a2b5e;
+      letter-spacing: -0.03em;
+      margin: 0;
+      line-height: 1.1;
+    }
 
-        .amount {
-            color: #1b5e20;
-            font-size: 36px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 20px;
-            letter-spacing: -0.5px;
-        }
+    .brand-text .subhead {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1f4a7a;
+      background: #e2edfe;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.3rem 1.2rem;
+      border-radius: 60px;
+      letter-spacing: 0.2px;
+      margin-top: 4px;
+      border: 1px solid rgba(10, 43, 94, 0.06);
+    }
 
-        .details {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+    .brand-text .subhead i {
+      font-size: 0.8rem;
+      color: #0a2b5e;
+    }
 
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-        }
+    @media (max-width: 500px) {
+      .brand-text h1 {
+        font-size: 1.6rem;
+      }
+      .brand-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+      }
+    }
 
-        .detail-label {
-            color: #2e7d32;
-            font-weight: 600;
-        }
+    /* — BADGE DE STATUT — */
+    .status-badge {
+      background: #e5f0ff;
+      color: #0a2b5e;
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 0.5rem 1.4rem;
+      border-radius: 60px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(10, 43, 94, 0.08);
+      letter-spacing: 0.2px;
+      margin-bottom: 1.6rem;
+      box-shadow: 0 2px 6px rgba(0, 40, 100, 0.04);
+    }
 
-        .detail-value {
-            color: #1a1a1a;
-            font-weight: 500;
-        }
+    .status-badge i {
+      font-size: 1rem;
+      color: #1a6bc4;
+    }
 
-        .warning-box {
-            background: linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%);
-            border: 2px solid #ffcc80;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
+    /* — CORPS DU MESSAGE — */
+    .message-body {
+      color: #1a2e4a;
+    }
 
-        .warning-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
+    .greeting {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0a2b5e;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .warning-icon {
-            width: 24px;
-            height: 24px;
-            background: #ff9800;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-        }
+    .greeting i {
+      color: #1a6bc4;
+      font-size: 1.3rem;
+    }
 
-        .warning-title {
-            color: #e65100;
-            font-size: 16px;
-            font-weight: 600;
-        }
+    .message-body p {
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #1f3a5f;
+    }
 
-        .warning-text {
-            color: #4a4a4a;
-            font-size: 13px;
-            text-align: center;
-            line-height: 1.5;
-            margin-bottom: 12px;
-        }
+    .message-body strong {
+      color: #0a2b5e;
+      font-weight: 600;
+    }
 
-        .warning-amount {
-            color: #d84315;
-            font-size: 20px;
-            font-weight: 700;
-            text-align: center;
-        }
+    /* — BLOC MIS EN AVANT (FRAIS) — */
+    .highlight-box {
+      background: #f5faff;
+      padding: 1.6rem 2rem;
+      border-radius: 28px;
+      margin: 1.6rem 0 2rem 0;
+      border-left: 6px solid #0a2b5e;
+      box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.02), 0 6px 14px rgba(10, 43, 94, 0.04);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        .btn-confirm {
-            width: 100%;
-            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 16px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-        }
+    .highlight-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
-        .btn-confirm:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
-        }
+    .highlight-left .label {
+      font-weight: 600;
+      color: #2b4f7a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
 
-        .btn-confirm:active {
-            transform: translateY(0);
-        }
+    .highlight-left .label i {
+      color: #1a6bc4;
+    }
 
-        .btn-close {
-            width: 100%;
-            background: transparent;
-            color: #4caf50;
-            border: none;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
+    .amount {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #0a2b5e;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
 
-        .btn-close:hover {
-            opacity: 0.7;
-        }
+    .highlight-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
 
-        .progress-container {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
+    .fee-note {
+      background: #e6f0fe;
+      border-radius: 60px;
+      padding: 0.45rem 1.2rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: #0a2b5e;
+      border: 1px solid #cddfff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
 
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
+    .fee-note i {
+      color: #1a6bc4;
+    }
 
-        .progress-label {
-            color: #4a4a4a;
-            font-size: 14px;
-            font-weight: 500;
-        }
+    .arrow-hint {
+      font-size: 0.9rem;
+      color: #1f3a5f;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-        .progress-percent {
-            color: #4caf50;
-            font-size: 18px;
-            font-weight: 700;
-        }
+    .arrow-hint i {
+      color: #0a2b5e;
+    }
 
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
+    @media (max-width: 650px) {
+      .highlight-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 1.4rem 1.4rem;
+      }
+      .highlight-right {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      .fee-note {
+        white-space: normal;
+      }
+      .amount {
+        font-size: 1.9rem;
+      }
+    }
 
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #4caf50 0%, #66bb6a 50%, #81c784 100%);
-            background-size: 200% 100%;
-            border-radius: 10px;
-            animation: progressAnimation 3s ease-out forwards, shimmer 1.5s infinite;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
+    /* — BOUTON DE CONTACT INLINE — */
+    .contact-inline {
+      background: #f2f8ff;
+      padding: 0.8rem 1.4rem;
+      border-radius: 60px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 0.2rem 0 0.6rem 0;
+      border: 1px solid #dce8f7;
+    }
 
-        .progress-fill::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: slide 1.5s infinite;
-        }
+    .contact-inline i {
+      color: #0a2b5e;
+    }
 
-        @keyframes progressAnimation {
-            0% {
-                width: 0%;
-            }
-            100% {
-                width: 98%;
-            }
-        }
+    /* — SIGNATURE — */
+    .signature {
+      margin-top: 2.4rem;
+      padding-top: 1.8rem;
+      border-top: 2px solid #eaf1fd;
+    }
 
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
+    .signature p {
+      margin-bottom: 0.2rem;
+    }
 
-        @keyframes slide {
-            0% {
-                left: -100%;
-            }
-            100% {
-                left: 200%;
-            }
-        }
-    </style>
+    .signature .department {
+      font-weight: 700;
+      color: #0a2b5e;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .signature .company {
+      font-weight: 500;
+      color: #2b4f7a;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* — PIED DE PAGE AVEC CONTACT & BOUTON — */
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      gap: 1.2rem;
+      background: #f7fbff;
+      padding: 0.9rem 1.8rem;
+      border-radius: 60px;
+      border: 1px solid #dfebf9;
+    }
+
+    .footer-row .support {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.95rem;
+      color: #1f3a5f;
+      flex-wrap: wrap;
+    }
+
+    .footer-row .support i {
+      color: #0a2b5e;
+      font-size: 1.1rem;
+    }
+
+    .footer-row .support .sep {
+      opacity: 0.3;
+      font-weight: 300;
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      border: 1.8px solid #0a2b5e;
+      color: #0a2b5e;
+      padding: 0.6rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: 0.2s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      letter-spacing: 0.2px;
+    }
+
+    .btn-outline:hover {
+      background: #0a2b5e;
+      color: white;
+      border-color: #0a2b5e;
+      box-shadow: 0 10px 22px -10px rgba(10, 43, 94, 0.30);
+      transform: scale(1.02);
+    }
+
+    .btn-outline i {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 550px) {
+      .footer-row {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 1rem 1.2rem;
+        border-radius: 32px;
+      }
+      .footer-row .support {
+        justify-content: center;
+      }
+      .btn-outline {
+        justify-content: center;
+      }
+    }
+
+    /* — BAS DE PAGE DISCRET — */
+    .footnote {
+      margin-top: 1.6rem;
+      font-size: 0.7rem;
+      color: #5b7b9e;
+      text-align: center;
+      border-top: 1px solid #e6effa;
+      padding-top: 1rem;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .footnote i {
+      color: #1a6bc4;
+    }
+
+    /* — ANIMATIONS — */
+    .fade-in {
+      animation: fadeUp 0.7s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 {
+      animation-delay: 0.04s;
+    }
+    .delay-2 {
+      animation-delay: 0.12s;
+    }
+    .delay-3 {
+      animation-delay: 0.22s;
+    }
+    .delay-4 {
+      animation-delay: 0.32s;
+    }
+
+    /* — PETITS AJUSTEMENTS — */
+    .text-muted {
+      color: #4b6b8f;
+    }
+    .mt-1 {
+      margin-top: 0.3rem;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="success-icon"></div>
-        
-        <h1>Гүйлгээ амжилттай боллоо</h1>
-        
-        <div class="info-box">
-            <div class="info-header">Таны дансанд мөнгө амжилттай орууллаа</div>
-            <div class="amount">35,000,000 MNT</div>
-            <div class="details">
-                <div class="detail-row">
-                    <span class="detail-label">Данс:</span>
-                    <span class="detail-value">5374496164</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Нэр:</span>
-                    <span class="detail-value">Санжмятав</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Банк:</span>
-                    <span class="detail-value">Хаан Банк</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Огноо:</span>
-                    <span class="detail-value" id="currentDate"></span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="warning-box">
-            <div class="warning-header">
-                <div class="warning-icon">ⓘ</div>
-                <div class="warning-title">Анхаарах зүйл</div>
-            </div>
-            <div class="warning-text">
-                5 сая төгрөгөөс дээш гүйлгээнд гүйлгээ нээх хураамж төлөх шаардлагатай.
-            </div>
-            <div class="warning-amount">Төлөх дүн: 390,000 MNT</div>
-        </div>
+  <div class="card fade-in delay-1">
+    <!-- EN-TÊTE -->
+    <header class="header">
+      <div class="brand-icon">
+        <i class="fas fa-shield-halved"></i>
+      </div>
+      <div class="brand-text">
+        <h1>NDL Даатгал</h1>
+        <span class="subhead">
+          <i class="fas fa-check-circle"></i> Даатгал баталгаажсан
+        </span>
+      </div>
+    </header>
 
-        <div class="progress-container">
-            <div class="progress-header">
-                <span class="progress-label">Гүйлгээ боловсруулж байна...</span>
-                <span class="progress-percent">98%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
-            </div>
-        </div>
-        
-        <button class="btn-confirm" onclick="handleConfirm()">Баримтыг авах</button>
-        <button class="btn-close" onclick="handleClose()">Дүгсрах</button>
+    <!-- BADGE STATUT -->
+    <div class="status-badge fade-in delay-1">
+      <i class="fas fa-circle-check"></i> Албан ёсны мэдэгдэл · Баталгаажсан
     </div>
 
-    <script>
-        function updateDateTime() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            
-            const dateTimeString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-            document.getElementById('currentDate').textContent = dateTimeString;
-        }
+    <!-- CORPS PRINCIPAL -->
+    <div class="message-body">
+      <div class="greeting fade-in delay-1">
+        <i class="fas fa-user-check"></i> Эрхэм харилцагч аа,
+      </div>
 
-        updateDateTime();
-        setInterval(updateDateTime, 1000);
+      <p class="fade-in delay-1">
+        Таны материалыг бүрэн шалгаж дууссаны дараа <strong>NDL Даатгал</strong> дахь таны даатгал албан ёсоор баталгаажиж, хүчин төгөлдөр болсныг мэдэгдэхэд таатай байна.
+      </p>
 
-        function handleConfirm() {
-            alert('Баримт татаж авах үйлдэл...');
-        }
+      <p class="fade-in delay-2">
+        <i class="fas fa-triangle-exclamation" style="color: #b22234; margin-right: 8px;"></i>
+        Санхүүгийн залилангийн улмаас танд учирсан хүндрэл, хохирлыг бид бүрэн ойлгож байна.
+        <strong>NDL Даатгал</strong> нь таны материалыг хамгийн өндөр түвшний нууцлал, ил тод байдал, аюулгүй байдлыг ханган боловсруулж байгааг танд баталгаажуулж байна.
+      </p>
 
-        function handleClose() {
-            alert('Хаах үйлдэл...');
-        }
-    </script>
+      <p class="fade-in delay-2">
+        Өмнө нь танд мэдээлсэнчлан, таны даатгалд хамрагдсан хөрөнгийн нөхөн төлбөрийг бидэнтэй харилцах үеэр бүртгүүлсэн банкны данс руу шилжүүлэх болно.
+      </p>
+
+      <!-- BLOC FRAIS (responsive) -->
+      <div class="highlight-box fade-in delay-2">
+        <div class="highlight-left">
+          <span class="label">
+            <i class="fas fa-receipt"></i> Захиргааны боловсруулалтын хураамж
+          </span>
+          <span class="amount">90,000 MNT</span>
+        </div>
+        <div class="highlight-right">
+          <span class="fee-note">
+            <i class="fas fa-clock"></i> Төлбөр баталгаажсаны дараа
+          </span>
+          <span class="arrow-hint">
+            <i class="fas fa-arrow-right"></i> Нөхөн төлбөр данс руу
+          </span>
+        </div>
+      </div>
+
+      <p class="fade-in delay-3">
+        <i class="fas fa-handshake" style="color: #0a2b5e; margin-right: 8px;"></i>
+        <strong>NDL Даатгал</strong> д итгэл хүлээлгэн хандсанд тань чин сэтгэлээсээ талархаж байна. Бид таны нөхөн төлбөрийг аль болох хурдан, аюулгүй бөгөөд манай байгууллагын журмын дагуу шийдвэрлэхийг эрхэм зорилгоо болгон ажиллаж байна.
+      </p>
+
+      <!-- Contact rapide inline -->
+      <div class="contact-inline fade-in delay-3">
+        <i class="fas fa-headset"></i>
+        <span>Хэрэв танд нэмэлт мэдээлэл шаардлагатай бол бидэнтэй хүссэн үедээ холбогдоно уу.</span>
+      </div>
+
+      <!-- SIGNATURE -->
+      <div class="signature fade-in delay-3">
+        <p style="font-weight: 600; font-size: 1.05rem; color: #0a2b5e;">Хүндэтгэсэн,</p>
+        <p class="department">
+          <i class="fas fa-building"></i> Нэхэмжлэл, Нөхөн төлбөрийн алба
+        </p>
+        <p class="company">
+          <i class="fas fa-shield-alt"></i> NDL Даатгал
+        </p>
+      </div>
+    </div>
+
+    <!-- FOOTER AVEC CONTACT & BOUTON -->
+    <div class="footer-row fade-in delay-4">
+      <div class="support">
+        <i class="fas fa-phone-volume"></i>
+        <span>+976 7011 2233</span>
+        <span class="sep">|</span>
+        <i class="fas fa-envelope"></i>
+        <span>support@ndl.mn</span>
+      </div>
+      <button class="btn-outline" id="contactBtn">
+        <i class="fas fa-paper-plane"></i> Бидэнтэй холбогдох
+      </button>
+    </div>
+
+    <!-- BAS DE PAGE : sécurité -->
+    <div class="footnote fade-in delay-4">
+      <i class="fas fa-lock"></i>
+      <span>Энэхүү мэдэгдэл нь NDL Даатгалын албан ёсны баталгаа юм.</span>
+      <span style="opacity:0.3; margin:0 4px;">·</span>
+      <i class="fas fa-shield-check"></i>
+      <span>Нууцлалын бодлого</span>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const btn = document.getElementById('contactBtn');
+      if (btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Désactivation temporaire + feedback
+          const original = this.innerHTML;
+          this.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Холбогдож байна...';
+          this.style.pointerEvents = 'none';
+          this.style.opacity = '0.8';
+
+          setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-check-circle"></i> Амжилттай!';
+            this.style.background = '#0a2b5e';
+            this.style.color = '#ffffff';
+            this.style.borderColor = '#0a2b5e';
+            this.style.transform = 'scale(1.02)';
+
+            // Retour à l'état initial après un moment
+            setTimeout(() => {
+              this.innerHTML = original;
+              this.style.background = '#ffffff';
+              this.style.color = '#0a2b5e';
+              this.style.borderColor = '#0a2b5e';
+              this.style.pointerEvents = 'auto';
+              this.style.opacity = '1';
+              this.style.transform = 'scale(1)';
+            }, 2200);
+          }, 700);
+        });
+      }
+
+      // Petit confort : s'assurer que tout est bien fluide
+      console.log('NDL Даатгал · Interface officielle chargée');
+    })();
+  </script>
 </body>
 </html>
